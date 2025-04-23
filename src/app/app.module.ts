@@ -1,21 +1,26 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
+import { LoginformComponent } from './components/auth/loginform/loginform.component';
+import { DashMainComponent } from './components/dashboard/dash-main/dash-main.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoginformComponent,
+    DashMainComponent,
     
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideClientHydration(),
