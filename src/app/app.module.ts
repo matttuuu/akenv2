@@ -7,6 +7,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { LoginformComponent } from './components/auth/loginform/loginform.component';
 import { DashMainComponent } from './components/dashboard/dash-main/dash-main.component';
+import { TestComponent } from './components/testing/test/test.component';
 
 
 
@@ -15,6 +16,7 @@ import { DashMainComponent } from './components/dashboard/dash-main/dash-main.co
     AppComponent,
     LoginformComponent,
     DashMainComponent,
+    TestComponent,
     
   ],
   imports: [

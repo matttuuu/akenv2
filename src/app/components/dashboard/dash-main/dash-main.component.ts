@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-dash-main',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class DashMainComponent {
 
+
+  constructor(
+    protected authService: AuthService
+  ) {}
+  
+
+  signOff(){
+    this.authService.logout();
+  }
 }
