@@ -8,6 +8,20 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { LoginformComponent } from './components/auth/loginform/loginform.component';
 import { DashMainComponent } from './components/dashboard/dash-main/dash-main.component';
 import { TestComponent } from './components/testing/test/test.component';
+import { SidebarComponent } from './components/dashboard/sidebar/sidebar.component';
+import { MetricContainerComponent } from './components/dashboard/metric-container/metric-container.component';
+import { AvgCleaningTimeComponent } from './components/metrics/avg-cleaning-time/avg-cleaning-time.component';
+import { AdrComponent } from './components/metrics/adr/adr.component';
+import { CheckInsComponent } from './components/metrics/check-ins/check-ins.component';
+import { CheckOutsComponent } from './components/metrics/check-outs/check-outs.component';
+import { DailyPickupsComponent } from './components/metrics/daily-pickups/daily-pickups.component';
+import { DirtyRoomsComponent } from './components/metrics/dirty-rooms/dirty-rooms.component';
+import { EarlyDeparturesComponent } from './components/metrics/early-departures/early-departures.component';
+import { HskProductivityComponent } from './components/metrics/hsk-productivity/hsk-productivity.component';
+import { NoShowsComponent } from './components/metrics/no-shows/no-shows.component';
+import { OccupiedRoomsComponent } from './components/metrics/occupied-rooms/occupied-rooms.component';
+import { OutOfOrderRoomsComponent } from './components/metrics/out-of-order-rooms/out-of-order-rooms.component';
+import { TotalCurrentGuestsComponent } from './components/metrics/total-current-guests/total-current-guests.component';
 
 
 
@@ -17,6 +31,20 @@ import { TestComponent } from './components/testing/test/test.component';
     LoginformComponent,
     DashMainComponent,
     TestComponent,
+    SidebarComponent,
+    MetricContainerComponent,
+    AvgCleaningTimeComponent,
+    AdrComponent,
+    CheckInsComponent,
+    CheckOutsComponent,
+    DailyPickupsComponent,
+    DirtyRoomsComponent,
+    EarlyDeparturesComponent,
+    HskProductivityComponent,
+    NoShowsComponent,
+    OccupiedRoomsComponent,
+    OutOfOrderRoomsComponent,
+    TotalCurrentGuestsComponent,
     
   ],
   imports: [

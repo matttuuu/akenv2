@@ -1,8 +1,14 @@
 
-*{
-    background-color: rgb(187, 223, 255);
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
+.main-content-container{
+    background-color: rgb(203, 224, 243);
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    height: 100vh;
+    /* min-height: 100dvh; */
+    
+}
+
+.button-signoff{
+    border-radius: 5px;
 }

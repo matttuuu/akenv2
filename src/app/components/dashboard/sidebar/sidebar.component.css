@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(226, 226, 231);
+    height: 100vh;
+    width: 15vh;
+    padding: 10px; 
+    margin: 10px;
+    top: 0px;
+    border: 1px;
+    display: block;
+    text-align: center; /*funca*/
+    
+}
+
+body{
+    box-sizing: border-box;
+    position: sticky;
+    
+}
+
+/* .separator1{
+   border-radius:2px ;
+   border-top: 3px solid #6b6b6b;
+   margin-left: -10px;
+   height: 3px;
+} */
