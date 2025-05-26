@@ -22,6 +22,9 @@ import { NoShowsComponent } from './components/metrics/no-shows/no-shows.compone
 import { OccupiedRoomsComponent } from './components/metrics/occupied-rooms/occupied-rooms.component';
 import { OutOfOrderRoomsComponent } from './components/metrics/out-of-order-rooms/out-of-order-rooms.component';
 import { TotalCurrentGuestsComponent } from './components/metrics/total-current-guests/total-current-guests.component';
+import { UsersTestComponent } from './components/metrics/users-test/users-test.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
+
 
 
 
@@ -45,12 +48,15 @@ import { TotalCurrentGuestsComponent } from './components/metrics/total-current-
     OccupiedRoomsComponent,
     OutOfOrderRoomsComponent,
     TotalCurrentGuestsComponent,
+    UsersTestComponent,
+    
     
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgApexchartsModule
   ],
   providers: [
     provideClientHydration(),
