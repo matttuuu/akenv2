@@ -1,5 +1,6 @@
 
-import { Component, ViewChild } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -11,7 +12,8 @@ import {
   ApexXAxis,
   ApexFill
 } from "ng-apexcharts";
-
+import { Observable } from "rxjs";
+import { TestUsersService } from "../../../services/test-users.service";
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -30,12 +32,29 @@ export type ChartOptions = {
   templateUrl: './users-test.component.html',
   styleUrl: './users-test.component.css'
 })
-export class UsersTestComponent {
+export class UsersTestComponent implements OnInit {
+  
+
+   ngOnInit(): void {
+    this.testUsersService.getUsers().subscribe({
+      next: (users) => {
+        console.log('Usuarios recibidos:', users)
+      },
+      error: (error) => {
+        console.error( 'error al obtener usuarios: ', error);
+      }
+    });
+    
+
+  }
+
   @ViewChild("chart")
   chart!: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
 
-  constructor() {
+  constructor(private http: HttpClient, private testUsersService: TestUsersService ) {
+
+
     this.chartOptions = {
       series: [
         {
@@ -136,8 +155,9 @@ export class UsersTestComponent {
         }
       },
       title: {
-        text: "Monthly Inflation in Argentina, 2002",
-        // floating: 0,
+        text: "Testing apexcharts again",
+        
+        floating: true,
         offsetY: 320,
         align: "center",
         style: {
@@ -146,4 +166,5 @@ export class UsersTestComponent {
       }
     };
   }
+ 
 }

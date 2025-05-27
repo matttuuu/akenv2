@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  provideClientHydration,
+} from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,9 +27,10 @@ import { OutOfOrderRoomsComponent } from './components/metrics/out-of-order-room
 import { TotalCurrentGuestsComponent } from './components/metrics/total-current-guests/total-current-guests.component';
 import { UsersTestComponent } from './components/metrics/users-test/users-test.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { HttpClientModule } from '@angular/common/http';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
-
-
+import Aura from '@primeng/themes/aura';
 
 @NgModule({
   declarations: [
@@ -49,20 +53,30 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     OutOfOrderRoomsComponent,
     TotalCurrentGuestsComponent,
     UsersTestComponent,
-    
-    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    NgApexchartsModule
+    NgApexchartsModule,
+    HttpClientModule,
   ],
   providers: [
     provideClientHydration(),
-    provideFirebaseApp(() => initializeApp({"projectId":"dashboardamekdev2","appId":"1:255865880746:web:59349d6d74727602a0d0d3","storageBucket":"dashboardamekdev2.firebasestorage.app","apiKey":"AIzaSyBhrcg-VnHKiFcpjFzM2njv_IXsz0C921I","authDomain":"dashboardamekdev2.firebaseapp.com","messagingSenderId":"255865880746"})),
-    provideAuth(() => getAuth())
+    provideFirebaseApp(() =>
+      initializeApp({
+        projectId: 'dashboardamekdev2',
+        appId: '1:255865880746:web:59349d6d74727602a0d0d3',
+        storageBucket: 'dashboardamekdev2.firebasestorage.app',
+        apiKey: 'AIzaSyBhrcg-VnHKiFcpjFzM2njv_IXsz0C921I',
+        authDomain: 'dashboardamekdev2.firebaseapp.com',
+        messagingSenderId: '255865880746',
+      })
+    ),
+    provideAuth(() => getAuth()),
+     provideAnimationsAsync(), //primeng
+      
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

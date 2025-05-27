@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
+import { ButtonDirective } from '@coreui/angular';
 
 @Component({
   selector: 'app-dash-main',
   templateUrl: './dash-main.component.html',
-  styleUrl: './dash-main.component.css'
+  styleUrl: './dash-main.component.css',
+  
+  
+  
 })
 export class DashMainComponent {
 
