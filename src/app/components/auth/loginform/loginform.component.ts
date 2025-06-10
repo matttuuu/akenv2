@@ -5,9 +5,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 
 @Component({
-  selector: 'app-loginform',
-  templateUrl: './loginform.component.html',
-  styleUrl: 'loginform.component.css',
+    selector: 'app-loginform',
+    templateUrl: './loginform.component.html',
+    styleUrl: 'loginform.component.css',
+    standalone: true,
+    imports: [ReactiveFormsModule],
 })
 export class LoginformComponent implements OnInit {
 

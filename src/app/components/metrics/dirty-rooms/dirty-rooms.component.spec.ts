@@ -8,8 +8,8 @@ describe('DirtyRoomsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DirtyRoomsComponent]
-    })
+    imports: [DirtyRoomsComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(DirtyRoomsComponent);

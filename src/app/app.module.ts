@@ -33,50 +33,45 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import Aura from '@primeng/themes/aura';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginformComponent,
-    DashMainComponent,
-    TestComponent,
-    SidebarComponent,
-    MetricContainerComponent,
-    AvgCleaningTimeComponent,
-    AdrComponent,
-    CheckInsComponent,
-    CheckOutsComponent,
-    DailyPickupsComponent,
-    DirtyRoomsComponent,
-    EarlyDeparturesComponent,
-    HskProductivityComponent,
-    NoShowsComponent,
-    OccupiedRoomsComponent,
-    OutOfOrderRoomsComponent,
-    TotalCurrentGuestsComponent,
-    UsersTestComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    NgApexchartsModule,
-    HttpClientModule,
-  ],
-  providers: [
-    provideClientHydration(),
-    provideFirebaseApp(() =>
-      initializeApp({
-        projectId: 'dashboardamekdev2',
-        appId: '1:255865880746:web:59349d6d74727602a0d0d3',
-        storageBucket: 'dashboardamekdev2.firebasestorage.app',
-        apiKey: 'AIzaSyBhrcg-VnHKiFcpjFzM2njv_IXsz0C921I',
-        authDomain: 'dashboardamekdev2.firebaseapp.com',
-        messagingSenderId: '255865880746',
-      })
-    ),
-    provideAuth(() => getAuth()),
-     provideAnimationsAsync(), //primeng
-      
-  ],
-  bootstrap: [AppComponent],
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        NgApexchartsModule,
+        HttpClientModule,
+        LoginformComponent,
+        DashMainComponent,
+        TestComponent,
+        SidebarComponent,
+        MetricContainerComponent,
+        AvgCleaningTimeComponent,
+        AdrComponent,
+        CheckInsComponent,
+        CheckOutsComponent,
+        DailyPickupsComponent,
+        DirtyRoomsComponent,
+        EarlyDeparturesComponent,
+        HskProductivityComponent,
+        NoShowsComponent,
+        OccupiedRoomsComponent,
+        OutOfOrderRoomsComponent,
+        TotalCurrentGuestsComponent,
+        UsersTestComponent,
+    ],
+    providers: [
+        provideClientHydration(),
+        provideFirebaseApp(() => initializeApp({
+            projectId: 'dashboardamekdev2',
+            appId: '1:255865880746:web:59349d6d74727602a0d0d3',
+            storageBucket: 'dashboardamekdev2.firebasestorage.app',
+            apiKey: 'AIzaSyBhrcg-VnHKiFcpjFzM2njv_IXsz0C921I',
+            authDomain: 'dashboardamekdev2.firebaseapp.com',
+            messagingSenderId: '255865880746',
+        })),
+        provideAuth(() => getAuth()),
+        provideAnimationsAsync(), //primeng
+    ],
+    bootstrap: [AppComponent],
 })
 export class AppModule {}

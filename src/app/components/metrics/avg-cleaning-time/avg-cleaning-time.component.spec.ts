@@ -8,8 +8,8 @@ describe('AvgCleaningTimeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AvgCleaningTimeComponent]
-    })
+    imports: [AvgCleaningTimeComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(AvgCleaningTimeComponent);

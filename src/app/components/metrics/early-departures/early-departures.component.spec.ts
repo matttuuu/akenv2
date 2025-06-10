@@ -8,8 +8,8 @@ describe('EarlyDeparturesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EarlyDeparturesComponent]
-    })
+    imports: [EarlyDeparturesComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(EarlyDeparturesComponent);

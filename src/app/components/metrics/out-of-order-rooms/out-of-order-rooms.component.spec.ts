@@ -8,8 +8,8 @@ describe('OutOfOrderRoomsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [OutOfOrderRoomsComponent]
-    })
+    imports: [OutOfOrderRoomsComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(OutOfOrderRoomsComponent);

@@ -8,8 +8,8 @@ describe('AdrComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AdrComponent]
-    })
+    imports: [AdrComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(AdrComponent);

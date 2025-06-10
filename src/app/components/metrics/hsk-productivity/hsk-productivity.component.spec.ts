@@ -8,8 +8,8 @@ describe('HskProductivityComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [HskProductivityComponent]
-    })
+    imports: [HskProductivityComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(HskProductivityComponent);

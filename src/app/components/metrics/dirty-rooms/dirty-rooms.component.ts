@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-dirty-rooms',
-  templateUrl: './dirty-rooms.component.html',
-  styleUrl: './dirty-rooms.component.css'
+    selector: 'app-dirty-rooms',
+    templateUrl: './dirty-rooms.component.html',
+    styleUrl: './dirty-rooms.component.css',
+    standalone: true
 })
 export class DirtyRoomsComponent {
 
