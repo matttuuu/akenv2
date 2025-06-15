@@ -5,4 +5,7 @@ const getAllHotels = async () => {
     return result.rows;
 }
 
+
+//const add hotel
+
 module.exports = {getAllHotels}

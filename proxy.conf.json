@@ -1,0 +1,11 @@
+{
+  "/api": {
+    "target": "https://api.mews-demo.com/api",
+    "secure": true,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}

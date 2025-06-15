@@ -14,6 +14,7 @@ import {
 import { Observable } from 'rxjs';
 import { TestUsersService } from '../../../services/test-users.service';
 import { UsersService } from '../../../services/users.service';
+import { LiveMetricsService } from '../../../services/live-metrics.service';
 
 
 export type ChartOptions = {
@@ -39,7 +40,6 @@ export class UsersTestComponent implements OnInit {
   fakeUserName: string[] = [];
   fakeAge: number[] = [];
 
-
   @ViewChild('chart')
   chart!: ChartComponent; // ! : non null assertion operator, es un operador que usamos para decirle a angular que estamos seguros de que vamos a darle un valor a una variable, o que esta será inicalizada mas adelante
   public chartOptions!: Partial<ChartOptions>;
@@ -59,6 +59,14 @@ export class UsersTestComponent implements OnInit {
       console.log('Lista de nombres: ', this.fakeUserName);
       console.log('Lista de edades: ', this.fakeAge); //Funciona
 
+
+      this.liveMetricService.makeGetTokensSpeak(); //Que dice??
+
+      // console.log("INFO PRIMER TEST LIVE METRICS: " + this.liveMetricService.getAllLiveMetrics() )
+      this.liveMetricService.getAllLiveMetrics().subscribe(data => {
+        console.log("Info de metricas live: "+ data);
+      })
+
       this.chartOptions = {
         series: [
           {
@@ -74,7 +82,6 @@ export class UsersTestComponent implements OnInit {
           bar: {
             dataLabels: {
               // position: 'top', // top, center, bottom
-              
             },
           },
         },
@@ -167,12 +174,9 @@ export class UsersTestComponent implements OnInit {
           style: {
             color: '#d187de', //Color de titulo
           },
-          
         },
       };
     });
-
-    
   }
 
   // @ViewChild('chart')
@@ -181,6 +185,7 @@ export class UsersTestComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private testUsersService: TestUsersService
+    private testUsersService: TestUsersService,
+    private liveMetricService:LiveMetricsService
   ) {}
 }
