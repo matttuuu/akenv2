@@ -16,7 +16,6 @@ import { TestUsersService } from '../../../services/test-users.service';
 import { UsersService } from '../../../services/users.service';
 import { LiveMetricsService } from '../../../services/live-metrics.service';
 
-
 export type ChartOptions = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
@@ -59,14 +58,56 @@ export class UsersTestComponent implements OnInit {
       console.log('Lista de nombres: ', this.fakeUserName);
       console.log('Lista de edades: ', this.fakeAge); //Funciona
 
-
       this.liveMetricService.makeGetTokensSpeak(); //Que dice??
 
       // console.log("INFO PRIMER TEST LIVE METRICS: " + this.liveMetricService.getAllLiveMetrics() )
-      this.liveMetricService.getAllLiveMetrics().subscribe(data => {
-        console.log("Info de metricas live: "+ data);
+      // this.liveMetricService.getAllLiveMetrics().subscribe((data) => {
+      //   console.log('Info de metricas live: ' + data);
+      // });
+
+      console.log('Info de CheckIns y Outs abajo: ');
+      this.liveMetricService.getTotalCheckIns().subscribe((totalCheckIns) => {
+        console.log('Total CheckIns:', totalCheckIns);
+      });
+
+      this.liveMetricService.getTotalCheckOuts().subscribe((totalCheckOuts) => {
+        console.log('Total CheckOuts:', totalCheckOuts);
+      });
+
+      this.liveMetricService
+        .getTotalConfirmedReservations()
+        .subscribe((totalConfimed) => {
+          console.log('Total Confirmed Reservations', totalConfimed);
+        });
+
+      this.liveMetricService
+        .getTotalCanceledReservations()
+        .subscribe((totalCanceled) => {
+          console.log('Total Canceled Reservations', totalCanceled);
+        });
+
+      this.liveMetricService.getTotalRooms().subscribe((totalRooms) =>{
+        console.log('Total hotel rooms', totalRooms)
       })
 
+      this.liveMetricService.getTotalDirtyRooms().subscribe((totalDirty) => {
+        console.log('Total dirty Rooms', totalDirty);
+      });
+
+      this.liveMetricService.getTotalCleanRooms().subscribe((totalClean) => {
+        console.log('Total Clean Rooms', totalClean);
+      });
+
+      this.liveMetricService.getTotalOccupiedRooms().subscribe((totalOccupied) => {
+        console.log("Total occupied Rooms TESTING", totalOccupied)
+      })
+
+      this.liveMetricService.getADR().subscribe((totalADR) =>{
+        console.log("TOTAL ADR TESTING", totalADR)
+      })
+      
+
+      ////Opciones y config chart
       this.chartOptions = {
         series: [
           {
@@ -167,12 +208,12 @@ export class UsersTestComponent implements OnInit {
           },
         },
         title: {
-          text: 'Testing fakeUsers age',
+          text: 'Edad de usuarios de prueba',
           floating: true,
           offsetY: 330,
           align: 'center',
           style: {
-            color: '#d187de', //Color de titulo
+            color: '#454545', //Color de titulo
           },
         },
       };
@@ -186,6 +227,6 @@ export class UsersTestComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private testUsersService: TestUsersService,
-    private liveMetricService:LiveMetricsService
+    private liveMetricService: LiveMetricsService
   ) {}
 }

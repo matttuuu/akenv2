@@ -12,66 +12,63 @@ import { LoginformComponent } from './components/auth/loginform/loginform.compon
 import { DashMainComponent } from './components/dashboard/dash-main/dash-main.component';
 import { TestComponent } from './components/testing/test/test.component';
 import { SidebarComponent } from './components/dashboard/sidebar/sidebar.component';
-import { MetricContainerComponent } from './components/dashboard/metric-container/metric-container.component';
-import { AvgCleaningTimeComponent } from './components/metrics/avg-cleaning-time/avg-cleaning-time.component';
-import { AdrComponent } from './components/metrics/adr/adr.component';
-import { CheckInsComponent } from './components/metrics/check-ins/check-ins.component';
-import { CheckOutsComponent } from './components/metrics/check-outs/check-outs.component';
-import { DailyPickupsComponent } from './components/metrics/daily-pickups/daily-pickups.component';
-import { DirtyRoomsComponent } from './components/metrics/dirty-rooms/dirty-rooms.component';
-import { EarlyDeparturesComponent } from './components/metrics/early-departures/early-departures.component';
-import { HskProductivityComponent } from './components/metrics/hsk-productivity/hsk-productivity.component';
-import { NoShowsComponent } from './components/metrics/no-shows/no-shows.component';
-import { OccupiedRoomsComponent } from './components/metrics/occupied-rooms/occupied-rooms.component';
-import { OutOfOrderRoomsComponent } from './components/metrics/out-of-order-rooms/out-of-order-rooms.component';
-import { TotalCurrentGuestsComponent } from './components/metrics/total-current-guests/total-current-guests.component';
+
+import { AdrComponent } from './components/metrics/revenue/adr/adr.component';
+
+import { ChartComponent } from 'ng-apexcharts';
 import { UsersTestComponent } from './components/metrics/users-test/users-test.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { HttpClientModule } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 import Aura from '@primeng/themes/aura';
+import { ConfirmedReservationsComponent } from './components/metrics/reservations-checks/confirmed-reservations/confirmed-reservations.component';
+import { CanceledReservationsComponent } from './components/metrics/reservations-checks/canceled-reservations/canceled-reservations.component';
+import { OccupiedRoomsComponent } from './components/metrics/rooms-info/occupied-rooms/occupied-rooms.component';
+import { ReservationsInfoComponent } from './components/metrics/reservations-checks/reservations-info/reservations-info.component';
+import { CleanDirtyComponent } from './components/metrics/rooms-info/clean-dirty/clean-dirty.component';
+import { TotalRoomsComponent } from './components/metrics/rooms-info/total-rooms/total-rooms.component';
+import { CheckInsOutsComponent } from './components/metrics/reservations-checks/check-ins-outs/check-ins-outs.component';
+import { CalendarComponent } from './components/dashboard/calendar/calendar.component';
+
+
 
 @NgModule({
-    declarations: [AppComponent],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        NgApexchartsModule,
-        HttpClientModule,
-        LoginformComponent,
-        DashMainComponent,
-        TestComponent,
-        SidebarComponent,
-        MetricContainerComponent,
-        AvgCleaningTimeComponent,
-        AdrComponent,
-        CheckInsComponent,
-        CheckOutsComponent,
-        DailyPickupsComponent,
-        DirtyRoomsComponent,
-        EarlyDeparturesComponent,
-        HskProductivityComponent,
-        NoShowsComponent,
-        OccupiedRoomsComponent,
-        OutOfOrderRoomsComponent,
-        TotalCurrentGuestsComponent,
-        UsersTestComponent,
-    ],
-    providers: [
-        provideClientHydration(),
-        provideFirebaseApp(() => initializeApp({
-            projectId: 'dashboardamekdev2',
-            appId: '1:255865880746:web:59349d6d74727602a0d0d3',
-            storageBucket: 'dashboardamekdev2.firebasestorage.app',
-            apiKey: 'AIzaSyBhrcg-VnHKiFcpjFzM2njv_IXsz0C921I',
-            authDomain: 'dashboardamekdev2.firebaseapp.com',
-            messagingSenderId: '255865880746',
-        })),
-        provideAuth(() => getAuth()),
-        provideAnimationsAsync(), //primeng
-    ],
-    bootstrap: [AppComponent],
+  declarations: [
+    AppComponent,
+    CalendarComponent,
+    
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    NgApexchartsModule,
+    HttpClientModule,
+    LoginformComponent,
+    DashMainComponent,
+    TestComponent,
+    SidebarComponent,
+    ReservationsInfoComponent,
+    AdrComponent,
+    TotalRoomsComponent,
+    UsersTestComponent,
+  ],
+  providers: [
+    provideClientHydration(),
+    provideFirebaseApp(() =>
+      initializeApp({
+        projectId: 'dashboardamekdev2',
+        appId: '1:255865880746:web:59349d6d74727602a0d0d3',
+        storageBucket: 'dashboardamekdev2.firebasestorage.app',
+        apiKey: 'AIzaSyBhrcg-VnHKiFcpjFzM2njv_IXsz0C921I',
+        authDomain: 'dashboardamekdev2.firebaseapp.com',
+        messagingSenderId: '255865880746',
+      })
+    ),
+    provideAuth(() => getAuth()),
+    provideAnimationsAsync(), //primeng
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

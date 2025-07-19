@@ -10,16 +10,31 @@
     <button (click)="signOff()" class="button-signoff">Cerrar Sesión</button>
   </div>
 
-  <div class="metric-container"> <!--GRID,-->
-    <div class="row1"> <!--FLEX-->
+  <div class="metric-container">
+    <!--LIVE METRICS-->
+    <app-total-rooms></app-total-rooms>
+    <app-reservations-info></app-reservations-info>
+    <div class="row-breaker"></div>
+    <!---->
+    <app-check-ins-outs></app-check-ins-outs>
+    <app-clean-dirty></app-clean-dirty>
+    <div class="row-breaker"></div>
+    <!---->
+    <app-occupied-rooms></app-occupied-rooms>
+    <!--Side--> <!--adr/average rate (puedo poner average daily rate cuando se vea la misma variable pero en la parte daily)-->
+
+    <!------------------------------------------------------------------------------------------------------------------------------------>
+
+    <!--DAILY METRICS-->
+
+
+
+    <div class="row1">
+      <!--FLEX-->
       <app-users-test></app-users-test>
-      
     </div>
-    <div class="row2"> <!--Sin estilo, row 2 toma todo el ancho de fila (sin css por el momento)-->
-      
-      
+    <div class="row2">
+      <!--Sin estilo, row 2 toma todo el ancho de fila (sin css por el momento)-->
     </div>
   </div>
-
-  <button cButton color="primary" variant="outline">Primary</button>
 </div>

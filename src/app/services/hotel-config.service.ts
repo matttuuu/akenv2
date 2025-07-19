@@ -28,11 +28,11 @@ export class HotelConfigService {
 
   //Metodos de prueba que me devuelven el token de cliente y accesso del hotel 2 - net pricing
   getTestingClientToken():string{
-    return "E916C341431C4D28A866AD200152DBD3-A046EB5583FFBE94DE1172237763712";
+    return "E0D439EE522F44368DC78E1BFB03710C-D24FB11DBE31D4621C4817E028D9E1D";
   }
 
   getTestingAccessToken():string{
-    return "1AEFA58C55E74D65BDC7AD2001564C12-66633E0B736F523379B9E5966165A55";
+    return "C66EF7B239D24632943D115EDE9CB810-EA00F8FD8294692C940F6B5A8F9453D";
   }
   
 }

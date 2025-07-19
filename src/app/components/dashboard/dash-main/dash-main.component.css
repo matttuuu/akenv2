@@ -1,22 +1,27 @@
-.main-content-container{
-    background-color: rgb(203, 224, 243);
-    margin: 0px;
-    padding: 0px;
-    display: flex;
-    height: 100vh;
-    /* min-height: 100dvh; */
-    
+.main-content-container {
+  background-color: rgb(203, 224, 243);
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  height: 100vh;
+  /* min-height: 100dvh; */
 }
 
-.button-signoff{
-    border-radius: 5px;
+.button-signoff {
+  border-radius: 5px;
 }
 
-.metric-container{
-    display: grid;
-    background-color: gainsboro;
+.metric-container {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: rgb(209, 209, 209);
 }
 
-.row1{
-    display: flex;
+.row1 {
+  display: flex;
+}
+
+.row-breaker {
+  flex-basis: 100%;
+  height: 0;
 }
