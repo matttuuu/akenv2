@@ -22,11 +22,10 @@ export type ChartOptions = {
 };
 
 @Component({
-  selector: 'app-reservations-info',
-  templateUrl: './reservations-info.component.html',
-  styleUrls: ['./reservations-info.component.css'],
-  standalone: true,
-  imports: [ChartComponent],
+    selector: 'app-reservations-info',
+    templateUrl: './reservations-info.component.html',
+    styleUrls: ['./reservations-info.component.css'],
+    imports: [ChartComponent]
 })
 export class ReservationsInfoComponent implements OnInit {
   @ViewChild('chart') chart!: ChartComponent;

@@ -1,1 +1,24 @@
-<p>calendar works!</p>
+<div class="calendar">
+  <div class="header">
+    <button (click)="prevMonth()">&#x276E;</button>
+    <div class="month">{{ currentMonthName }} {{ currentYear() }}</div>
+    <button (click)="nextMonth()">&#x276F;</button>
+  </div>
+  <button (click)="toggleSelectMode()" class="mode-toggle">
+    Mode: {{ selectMode === "range" ? "Range" : "Single" }}
+  </button>
+  <div class="weekdays">
+    <div *ngFor="let day of weekDays">{{ day }}</div>
+  </div>
+  <div class="days">
+    <div
+      *ngFor="let day of calendarDays()"
+      [class.inactive]="!day.inCurrentMonth"
+      [class.selected]="isSelected(day.date)"
+      [class.in-range]="isInRange(day.date)"
+      (click)="selectDate(day.date)"
+    >
+      {{ day.date.getDate() }}
+    </div>
+  </div>
+</div>

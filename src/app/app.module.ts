@@ -36,7 +36,7 @@ import { CalendarComponent } from './components/dashboard/calendar/calendar.comp
 @NgModule({
   declarations: [
     AppComponent,
-    CalendarComponent,
+    
     
   ],
   imports: [
@@ -53,6 +53,7 @@ import { CalendarComponent } from './components/dashboard/calendar/calendar.comp
     AdrComponent,
     TotalRoomsComponent,
     UsersTestComponent,
+    CalendarComponent
   ],
   providers: [
     provideClientHydration(),

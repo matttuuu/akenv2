@@ -6,7 +6,9 @@ const getAllDailyMetrics = async () => {
 };
 
 
-//const addDailyMetric
+const addDailyMetric  =async (hotelId,checkIns, checkOuts,  cancelledReserves,confirmedReserves,adr ) => {
+  await pool.query('INSERT INTO daily_metrics (hotel)')
+}
 
 
 //const modifyDailyMetric?

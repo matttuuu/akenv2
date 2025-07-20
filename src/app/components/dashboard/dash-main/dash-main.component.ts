@@ -8,6 +8,7 @@ import { CheckInsOutsComponent } from '../../metrics/reservations-checks/check-i
 import { OccupiedRoomsComponent } from "../../metrics/rooms-info/occupied-rooms/occupied-rooms.component";
 import { TotalRoomsComponent } from "../../metrics/rooms-info/total-rooms/total-rooms.component";
 import { CleanDirtyComponent } from "../../metrics/rooms-info/clean-dirty/clean-dirty.component";
+import { CalendarComponent } from "../calendar/calendar.component";
 
 
 
@@ -15,11 +16,10 @@ import { CleanDirtyComponent } from "../../metrics/rooms-info/clean-dirty/clean-
 // import { CButton } from '';
 
 @Component({
-  selector: 'app-dash-main',
-  templateUrl: './dash-main.component.html',
-  styleUrl: './dash-main.component.css',
-  standalone: true,
-  imports: [SidebarComponent, UsersTestComponent, ButtonDirective, ReservationsInfoComponent, CheckInsOutsComponent, OccupiedRoomsComponent, TotalRoomsComponent, CleanDirtyComponent],
+    selector: 'app-dash-main',
+    templateUrl: './dash-main.component.html',
+    styleUrl: './dash-main.component.css',
+    imports: [SidebarComponent, UsersTestComponent, ButtonDirective, ReservationsInfoComponent, CheckInsOutsComponent, OccupiedRoomsComponent, TotalRoomsComponent, CleanDirtyComponent, CalendarComponent]
 })
 export class DashMainComponent {
   constructor(protected authService: AuthService) {}

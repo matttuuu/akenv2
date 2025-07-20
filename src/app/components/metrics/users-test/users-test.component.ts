@@ -28,11 +28,10 @@ export type ChartOptions = {
 };
 
 @Component({
-  selector: 'app-users-test',
-  templateUrl: './users-test.component.html',
-  styleUrl: './users-test.component.css',
-  standalone: true,
-  imports: [ChartComponent],
+    selector: 'app-users-test',
+    templateUrl: './users-test.component.html',
+    styleUrl: './users-test.component.css',
+    imports: [ChartComponent]
 })
 export class UsersTestComponent implements OnInit {
   fakeUsersData: any[] = [];

@@ -20,11 +20,10 @@ export type ChartOptions = {
 };
 
 @Component({
-  selector: 'app-check-ins-outs',
-  templateUrl: './check-ins-outs.component.html',
-  styleUrl: './check-ins-outs.component.css',
-  standalone: true,
-  imports: [ChartComponent],
+    selector: 'app-check-ins-outs',
+    templateUrl: './check-ins-outs.component.html',
+    styleUrl: './check-ins-outs.component.css',
+    imports: [ChartComponent]
 })
 export class CheckInsOutsComponent implements OnInit {
   @ViewChild('chart') chart!: ChartComponent;
