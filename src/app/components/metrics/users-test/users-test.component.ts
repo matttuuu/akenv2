@@ -15,6 +15,8 @@ import { Observable } from 'rxjs';
 import { TestUsersService } from '../../../services/test-users.service';
 import { UsersService } from '../../../services/users.service';
 import { LiveMetricsService } from '../../../services/live-metrics.service';
+import { DailyMetricsService } from '../../../services/daily-metrics.service';
+import { HotelConfigService } from '../../../services/hotel-config.service';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -219,6 +221,13 @@ export class UsersTestComponent implements OnInit {
     });
   }
 
+  probarInsertarMetricas() {
+  const clientToken = this.hotelConfig.getTestingClientToken();
+  const accessToken = this.hotelConfig.getTestingAccessToken();
+
+  this.dailyMetrics.insertDailyMetricsToDB(clientToken, accessToken);
+}
+
   // @ViewChild('chart')
   // chart!: ChartComponent;
   // public chartOptions: Partial<ChartOptions>;
@@ -226,6 +235,8 @@ export class UsersTestComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private testUsersService: TestUsersService,
-    private liveMetricService: LiveMetricsService
+    private liveMetricService: LiveMetricsService,
+    private dailyMetrics: DailyMetricsService,
+    private hotelConfig: HotelConfigService
   ) {}
 }

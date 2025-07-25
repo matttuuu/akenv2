@@ -9,6 +9,8 @@ import { OccupiedRoomsComponent } from "../../metrics/rooms-info/occupied-rooms/
 import { TotalRoomsComponent } from "../../metrics/rooms-info/total-rooms/total-rooms.component";
 import { CleanDirtyComponent } from "../../metrics/rooms-info/clean-dirty/clean-dirty.component";
 import { CalendarComponent } from "../calendar/calendar.component";
+// import { NavbarComponent } from "../../../../../node_modules/@coreui/angular/lib/navbar/navbar.component";
+import { AdrComponent } from "../../metrics/revenue/adr/adr.component";
 
 
 
@@ -19,7 +21,7 @@ import { CalendarComponent } from "../calendar/calendar.component";
     selector: 'app-dash-main',
     templateUrl: './dash-main.component.html',
     styleUrl: './dash-main.component.css',
-    imports: [SidebarComponent, UsersTestComponent, ButtonDirective, ReservationsInfoComponent, CheckInsOutsComponent, OccupiedRoomsComponent, TotalRoomsComponent, CleanDirtyComponent, CalendarComponent]
+    imports: [SidebarComponent, UsersTestComponent, ButtonDirective, ReservationsInfoComponent, CheckInsOutsComponent, OccupiedRoomsComponent, TotalRoomsComponent, CleanDirtyComponent, CalendarComponent, AdrComponent]
 })
 export class DashMainComponent {
   constructor(protected authService: AuthService) {}

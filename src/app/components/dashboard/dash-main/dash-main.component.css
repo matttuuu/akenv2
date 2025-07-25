@@ -1,27 +1,69 @@
-.main-content-container {
-  background-color: rgb(203, 224, 243);
-  margin: 0px;
-  padding: 0px;
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+*{
+  font-family: "Inter", sans-serif;
+  
+}
+
+body {
+   margin: 0;
+   padding: 0;
+}
+
+.layout-main {
   display: flex;
+  /* flex-direction: column; */
   height: 100vh;
-  /* min-height: 100dvh; */
 }
 
-.button-signoff {
-  border-radius: 5px;
+.navbar {
+  background-color: #0a0a23;
+  color: white;
+  padding: 1rem 2rem;
+  text-align: center;
 }
 
-.metric-container {
+.main-content {
   display: flex;
-  flex-wrap: wrap;
-  background-color: rgb(209, 209, 209);
+  flex: 1;
 }
 
-.row1 {
-  display: flex;
+.sidebar {
+  width: 200px;
+  background-color: #d6e4f0;
+  padding: 1rem;
 }
 
-.row-breaker {
-  flex-basis: 100%;
-  height: 0;
+.central-content {
+  flex: 1;
+  padding: 2rem;
+  background-color: #eeeeee;
+  overflow-y: auto;
 }
+
+.central-content .title {
+  background-color: #f0f8ff;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  border-radius: 8px;
+}
+
+.metrics-section {
+  margin-bottom: 3rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.live-metrics,
+.daily-metrics {
+  display: grid;
+  gap: 1rem;
+}
+
+/* Responsive */
+/* @media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+  }
+} */

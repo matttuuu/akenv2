@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, forkJoin, shareReplay } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { HotelConfigService } from './hotel-config.service';
+import { DailyMetricsService } from './daily-metrics.service';
 import { map } from 'rxjs';
 
 @Injectable({
@@ -14,7 +15,8 @@ export class LiveMetricsService {
 
   constructor(
     private http: HttpClient,
-    private currentHotel: HotelConfigService
+    private hotelConfig: HotelConfigService,
+   
     
   ) {}
 
@@ -34,16 +36,16 @@ export class LiveMetricsService {
 
   private getTokensPayload() {
     return {
-      ClientToken: this.currentHotel.getClientToken(),
-      AccessToken: this.currentHotel.getAccessToken(),
+      ClientToken: this.hotelConfig.getClientToken(),
+      AccessToken: this.hotelConfig.getAccessToken(),
     };
   }
 
   private getTestingTokensPayload() {
     //metodo de prueba para verificar que se devuelva un objeto con ambos strings
     return {
-      ClientToken: this.currentHotel.getTestingClientToken(),
-      AccessToken: this.currentHotel.getTestingAccessToken(),
+      ClientToken: this.hotelConfig.getTestingClientToken(),
+      AccessToken: this.hotelConfig.getTestingAccessToken(),
     };
   }
 
@@ -145,7 +147,7 @@ export class LiveMetricsService {
   return this.orderItemsCache$;
 }
 
-  // // // // getCurrentADR
+  
 
   //Info de reservas que se han creado en el dia... ///Funciona - Probando ahora con entorno 1 gross pricing (Uk)
 
@@ -231,13 +233,6 @@ export class LiveMetricsService {
   }
 
   getADR(): Observable<number> {
-    //GET ADR TESTING - Resolver numero devuelto no es correcto - Posible numero correcto,
-
-    //Es posible que el ADR ande bien, pero son muchos numeros para comparar manualmente
-    ///Para confirmar, hacer el calculo a mano, y tener en cuenta que se compara por createdUtc y updatedUtc a la vez
-    //Si el promedio de Amount.NetValue es igual, el adr es correcto
-
-    //Seguir con graficos y calendario
     
     return forkJoin({
       orderItems: this.getAllOrderItemsInfo(), 

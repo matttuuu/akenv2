@@ -6,11 +6,34 @@ const getAllDailyMetrics = async () => {
 };
 
 
-const addDailyMetric  =async (hotelId,checkIns, checkOuts,  cancelledReserves,confirmedReserves,adr ) => {
-  await pool.query('INSERT INTO daily_metrics (hotel)')
-}
+// Inserta una métrica usando los tokens para buscar el hotel_id
+const addDailyMetric = async (clientToken, accessToken, checkIns, checkOuts, confirmedReserves, cancelledReserves, adr) => {
+  const result = await pool.query(
+    `
+    INSERT INTO daily_metrics (
+      hotel_id,
+      checkins,
+      checkouts,
+      confirmedreserves,
+      cancelledreserves,
+      adr
+    )
+    SELECT id, $3, $4, $5, $6, $7
+    FROM hotels
+    WHERE clienttoken = $1 AND accesstoken = $2
+    RETURNING *;
+    `,
+    [clientToken, accessToken, checkIns, checkOuts, confirmedReserves, cancelledReserves, adr]
+  );
+
+  return result;
+};
+
+
+
+
 
 
 //const modifyDailyMetric?
 
-module.exports = {getAllDailyMetrics}
+module.exports = {getAllDailyMetrics,addDailyMetric}

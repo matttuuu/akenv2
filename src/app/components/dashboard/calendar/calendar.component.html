@@ -5,7 +5,7 @@
     <button (click)="nextMonth()">&#x276F;</button>
   </div>
   <button (click)="toggleSelectMode()" class="mode-toggle">
-    Mode: {{ selectMode === "range" ? "Range" : "Single" }}
+    Seleccionar fecha para: {{ selectMode === "range" ? "Rango" : "Día" }}
   </button>
   <div class="weekdays">
     <div *ngFor="let day of weekDays">{{ day }}</div>
