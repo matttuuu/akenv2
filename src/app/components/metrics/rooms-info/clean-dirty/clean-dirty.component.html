@@ -1,1 +1,23 @@
-<p>clean-dirty works!</p>
+<div class="content">
+  <p class="description">Información de habitaciones</p>
+  <!--Clean rooms-->
+  <div class="rooms-info">
+    <div class="clean">
+      <p *ngIf="cleanRooms !== null" class="title-number">
+        {{ cleanRooms }}
+      </p>
+      <p *ngIf="cleanRooms === null" class="title-number">
+        Cargando habitaciones ordenadas...
+      </p>
+    </div>
+    <!--Dirty rooms-->
+    <div class="dirty">
+      <p *ngIf="dirtyRooms !== null" class="title-number">
+        {{ dirtyRooms }}
+      </p>
+      <p *ngIf="dirtyRooms === null" class="title-number">
+        Cargando habitaciones desordenadas...
+      </p>
+    </div>
+  </div>
+</div>

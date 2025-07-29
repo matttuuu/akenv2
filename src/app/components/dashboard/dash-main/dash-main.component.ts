@@ -11,6 +11,7 @@ import { CleanDirtyComponent } from "../../metrics/rooms-info/clean-dirty/clean-
 import { CalendarComponent } from "../calendar/calendar.component";
 // import { NavbarComponent } from "../../../../../node_modules/@coreui/angular/lib/navbar/navbar.component";
 import { AdrComponent } from "../../metrics/revenue/adr/adr.component";
+import { CommonModule } from '@angular/common';
 
 
 
@@ -21,10 +22,21 @@ import { AdrComponent } from "../../metrics/revenue/adr/adr.component";
     selector: 'app-dash-main',
     templateUrl: './dash-main.component.html',
     styleUrl: './dash-main.component.css',
-    imports: [SidebarComponent, UsersTestComponent, ButtonDirective, ReservationsInfoComponent, CheckInsOutsComponent, OccupiedRoomsComponent, TotalRoomsComponent, CleanDirtyComponent, CalendarComponent, AdrComponent]
+    imports: [SidebarComponent,CommonModule, UsersTestComponent, ButtonDirective, ReservationsInfoComponent, CheckInsOutsComponent, OccupiedRoomsComponent, TotalRoomsComponent, CleanDirtyComponent, CalendarComponent, AdrComponent]
 })
 export class DashMainComponent {
   constructor(protected authService: AuthService) {}
+
+  showCompareModal = false;
+
+  openModal() {
+    this.showCompareModal = true;
+  }
+    
+  closeModal() {
+    this.showCompareModal = false;
+  }
+  
 
   signOff() {
     this.authService.logout();

@@ -13,7 +13,7 @@
       <section class="metrics-section live-metrics">
         <h3 class="live-metrics">
           <h3>Live Metrics</h3>
-          <p style="font-size: 7px;">Last updated: </p>
+          <p style="font-size: 10px">Last updated:</p>
           <app-total-rooms></app-total-rooms>
           <app-clean-dirty></app-clean-dirty>
           <app-check-ins-outs></app-check-ins-outs>
@@ -25,6 +25,17 @@
       <section class="metrics-section daily-metrics">
         <h3>Daily Metrics</h3>
         <app-calendar></app-calendar>
+        
+        <button (click)="openModal()">Abrir ventana modal</button>
+
+        <div class="overlay" *ngIf="showCompareModal">
+          <div class="compare-modal">
+            <h2>Modal simple</h2>
+            <p>Hecho solo con estilos y divs</p>
+            <button (click)="closeModal()">Cerrar</button>
+          </div>
+
+        </div>
         <app-users-test></app-users-test>
       </section>
     </div>
