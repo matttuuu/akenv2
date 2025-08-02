@@ -4,19 +4,19 @@
   <div class="rooms-info">
     <div class="clean">
       <p *ngIf="cleanRooms !== null" class="title-number">
-        {{ cleanRooms }}
+        {{ cleanRooms }} Clean Rooms
       </p>
       <p *ngIf="cleanRooms === null" class="title-number">
-        Cargando habitaciones ordenadas...
+        Obtaining clean rooms...
       </p>
     </div>
     <!--Dirty rooms-->
     <div class="dirty">
       <p *ngIf="dirtyRooms !== null" class="title-number">
-        {{ dirtyRooms }}
+        {{ dirtyRooms }} Dirty rooms
       </p>
       <p *ngIf="dirtyRooms === null" class="title-number">
-        Cargando habitaciones desordenadas...
+        Obtaining dirty rooms...
       </p>
     </div>
   </div>

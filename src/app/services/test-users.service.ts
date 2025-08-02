@@ -6,12 +6,12 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class TestUsersService {
-  private fakeUsersURL = 'http://localhost:3000/api/testUsers/getTestUsers';
+  private fakeUsersURL = 'http://localhost:3000/api/testUsers';
 
   constructor(private http: HttpClient) {}
 
   getUsers(): Observable<any> {
     //Funcion que me permite obtener los usuarios de prueba mediante un GET a nuestra API propia
-    return this.http.get<any>(this.fakeUsersURL);
+    return this.http.get<any>(this.fakeUsersURL + '/getTestUsers');
   }
 }

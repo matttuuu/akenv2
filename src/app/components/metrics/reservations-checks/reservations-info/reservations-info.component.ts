@@ -56,22 +56,25 @@ export class ReservationsInfoComponent implements OnInit {
         chart: {
           type: 'bar',
           height: 350,
+          width: 500,
         },
         plotOptions: {
           bar: {
             horizontal: true,
             columnWidth: '55%',
+            borderRadius: 4,
           },
         },
         dataLabels: {
-          enabled: false,
+          enabled: true,
         },
         xaxis: {
-          categories: ['Info de reservas'],
+          categories: [''],
         },
         title: {
           text: 'Reservas',
         },
+        
       };
     });
   }

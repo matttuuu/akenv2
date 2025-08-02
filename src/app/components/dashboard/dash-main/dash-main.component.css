@@ -62,6 +62,13 @@ body {
   gap: 1rem;
 }
 
+.graphs-live-section-1{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+}
+
 
 /* Fondo oscuro detrás del modal */
 .overlay {

@@ -1,1 +1,7 @@
-<p>adr works!</p>
+<div class="content">
+  <p class="description">Average rate:</p>
+  <p *ngIf="currentAdr !== null" class="title-number">
+    {{ currentAdr }} 	£
+  </p>
+  <p *ngIf="currentAdr === null" class="title-number">calculating adr...</p>
+</div>

@@ -6,18 +6,20 @@
     <div class="sidebar"></div>
     <div class="central-content">
       <div class="central-content title">
-        <h2>Bienvenido 'User'</h2>
+        <h2>Welcome   </h2>
         <p>Haz click en el botón para cerrar sesión</p>
       </div>
 
       <section class="metrics-section live-metrics">
         <h3 class="live-metrics">
-          <h3>Live Metrics</h3>
+          <h3>Live Metrics</h3> 
+          <app-hotel-dropdown></app-hotel-dropdown>
           <p style="font-size: 10px">Last updated:</p>
           <app-total-rooms></app-total-rooms>
           <app-clean-dirty></app-clean-dirty>
-          <app-check-ins-outs></app-check-ins-outs>
-          <app-reservations-info></app-reservations-info>
+          <div class="graphs-live-section-1"><app-check-ins-outs></app-check-ins-outs>
+          <app-reservations-info></app-reservations-info></div>
+          
           <app-adr></app-adr>
           <!--occupied rooms?-->
         </h3>
@@ -36,7 +38,7 @@
           </div>
 
         </div>
-        <app-users-test></app-users-test>
+        <!-- <app-users-test></app-users-test> -->
       </section>
     </div>
   </div>

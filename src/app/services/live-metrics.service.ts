@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, forkJoin, shareReplay } from 'rxjs';
+import { Observable, forkJoin, of, shareReplay } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { HotelConfigService } from './hotel-config.service';
 import { DailyMetricsService } from './daily-metrics.service';
@@ -15,9 +15,7 @@ export class LiveMetricsService {
 
   constructor(
     private http: HttpClient,
-    private hotelConfig: HotelConfigService,
-   
-    
+    private hotelConfig: HotelConfigService
   ) {}
 
   //Variables cache propias en codigo
@@ -28,13 +26,30 @@ export class LiveMetricsService {
 
   refreshReservationsInfo(): void {
     this.reservationsCache$ = null;
+    sessionStorage.removeItem('reservationsCache');
+    this.resourcesCaches$ = null;
+    sessionStorage.removeItem('resourcesCache');
+    this.orderItemsCache$ = null;
+    sessionStorage.removeItem('orderItemsCache');
   }
 
-  
+  ////Parte nueva - session storage ///////////////////////////////////////////////////////////
+
+  private getFromSessionStorage<T>(key: string): T | null {
+    const raw = sessionStorage.getItem(key);
+    return raw ? (JSON.parse(raw) as T) : null;
+  }
+
+  private saveToSessionStorage<T>(key: string, value: T): void {
+    sessionStorage.setItem(key, JSON.stringify(value));
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////
 
   //Tokens
 
   private getTokensPayload() {
+    ////Tokens reales - DEFINIR
     return {
       ClientToken: this.hotelConfig.getClientToken(),
       AccessToken: this.hotelConfig.getAccessToken(),
@@ -42,6 +57,7 @@ export class LiveMetricsService {
   }
 
   private getTestingTokensPayload() {
+    //Tokens de prueba : Uk
     //metodo de prueba para verificar que se devuelva un objeto con ambos strings
     return {
       ClientToken: this.hotelConfig.getTestingClientToken(),
@@ -49,89 +65,177 @@ export class LiveMetricsService {
     };
   }
 
+
+  private getHotelTokens(hotelName: String) { 
+    //Metodo que me permite obtener par de tokens 
+    this.hotelConfig.getHotelsList().subscribe({
+      next: (response) => {
+
+      }
+    })
+  }
+
+  private changeHotel() {
+    
+  }
+
   //Datos hotel mews
   //total available rooms?
 
   //Reservations
   getAllReservationsInfo(): Observable<any[]> {
-    if (!this.reservationsCache$) {
-       const today = new Date();
-       const startOfDay = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0)).toISOString();
-       const endOfDay = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59)).toISOString();
-      const payload = {
-        ...this.getTestingTokensPayload(),
-        
-        StartUtc:startOfDay,
-        EndUtc: endOfDay
-      };
+    const cacheKey = 'reservationsCache';
 
-      const headers = {
-        'Content-Type': 'application/json',
-      };
+    // Si ya tenemos la cache en memoria, devolvemos eso (ideal para múltiples suscripciones sin ir a storage)
+    if (this.reservationsCache$) return this.reservationsCache$;
 
-      this.reservationsCache$ = this.http
-        .post<any>(`${this.apiURL}reservations/getAll`, payload, { headers })
-        .pipe(
-          map((res) => res.Reservations || []),
-          shareReplay(1) //La 'ultima' respuesta de la consulta se mantiene en el cache, disponible para cualquier funcion u objeto que se quiera suscribir
-        );
+    // Intentamos recuperar del sessionStorage
+    const storedData = this.getFromSessionStorage<any[]>(cacheKey);
+    if (storedData) {
+      this.reservationsCache$ = new Observable((observer) => {
+        observer.next(storedData);
+        observer.complete();
+      });
+      return this.reservationsCache$;
     }
+
+    // Si no está en cache ni en sessionStorage, hacemos la petición
+    const today = new Date();
+    const startOfDay = new Date(
+      Date.UTC(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0)
+    ).toISOString();
+    const endOfDay = new Date(
+      Date.UTC(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate(),
+        23,
+        59,
+        59
+      )
+    ).toISOString();
+
+    const payload = {
+      ...this.getTestingTokensPayload(),
+      StartUtc: startOfDay,
+      EndUtc: endOfDay,
+    };
+
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    this.reservationsCache$ = this.http
+      .post<any>(`${this.apiURL}reservations/getAll`, payload, { headers })
+      .pipe(
+        map((res) => res.Reservations || []),
+        map((data) => {
+          this.saveToSessionStorage(cacheKey, data); // Guardamos en sessionStorage
+          return data;
+        }),
+        shareReplay(1)
+      );
 
     return this.reservationsCache$;
   }
 
   //Resources
   getAllResourcesInfo(): Observable<any[]> {
-    
-    if (!this.resourcesCaches$) {
-       const today = new Date();
-       const startOfDay = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0)).toISOString();
-       const endOfDay = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59)).toISOString();
-      const payload = {
-        
-        ...this.getTestingTokensPayload(),
-        
-        StartUtc: startOfDay,
-        EndUtc: endOfDay
-      };
-      const headers = {
-        'Content-Type': 'application/json',
-      };
+    const cacheKey = 'resourcesCache';
 
-      this.resourcesCaches$ = this.http
-        .post<any>(`${this.apiURL}resources/getAll`, payload, { headers })
-        .pipe(
-          map((res) => res.Resources || []),
-          shareReplay(1)
-        );
+    if (this.resourcesCaches$) {
+      return this.resourcesCaches$;
     }
+
+    const storedData = this.getFromSessionStorage<any[]>(cacheKey);
+    if (storedData) {
+      this.resourcesCaches$ = of(storedData);
+      return this.resourcesCaches$;
+    }
+
+    const today = new Date();
+    const startOfDay = new Date(
+      Date.UTC(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0)
+    ).toISOString();
+    const endOfDay = new Date(
+      Date.UTC(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate(),
+        23,
+        59,
+        59
+      )
+    ).toISOString();
+
+    const payload = {
+      ...this.getTestingTokensPayload(),
+      StartUtc: startOfDay,
+      EndUtc: endOfDay,
+    };
+
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    this.resourcesCaches$ = this.http
+      .post<any>(`${this.apiURL}resources/getAll`, payload, { headers })
+      .pipe(
+        map((res) => res.Resources || []),
+        map((data) => {
+          this.saveToSessionStorage(cacheKey, data);
+          return data;
+        }),
+        shareReplay(1)
+      );
+
     return this.resourcesCaches$;
   }
 
   //Order Items
   getAllOrderItemsInfo(): Observable<any[]> {
-  if (!this.orderItemsCache$) {
+    const cacheKey = 'orderItemsCache';
+
+    if (this.orderItemsCache$) {
+      return this.orderItemsCache$;
+    }
+
+    const storedData = this.getFromSessionStorage<any[]>(cacheKey);
+    if (storedData) {
+      this.orderItemsCache$ = of(storedData);
+      return this.orderItemsCache$;
+    }
+
     const today = new Date();
-    const startOfDay = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0)).toISOString();
-    const endOfDay = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59)).toISOString();
+    const startOfDay = new Date(
+      Date.UTC(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0)
+    ).toISOString();
+    const endOfDay = new Date(
+      Date.UTC(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate(),
+        23,
+        59,
+        59
+      )
+    ).toISOString();
+
     const payload = {
       ...this.getTestingTokensPayload(),
-      Limitation: {
-        Count: 500 // Si se necesitan mas items, lo aumentamos
-      },
+      Limitation: { Count: 500 },
       CreatedUtc: {
         StartUtc: startOfDay,
-        EndUtc: endOfDay
+        EndUtc: endOfDay,
       },
       UpdatedUtc: {
         StartUtc: startOfDay,
-        EndUtc: endOfDay
+        EndUtc: endOfDay,
       },
       Types: ['SpaceOrder'],
-      AccountingStates: [
-        'Open'
-      ]
+      AccountingStates: ['Open'],
     };
+
     const headers = {
       'Content-Type': 'application/json',
     };
@@ -140,14 +244,15 @@ export class LiveMetricsService {
       .post<any>(`${this.apiURL}orderItems/getAll`, payload, { headers })
       .pipe(
         map((res) => res.OrderItems || []),
+        map((data) => {
+          this.saveToSessionStorage(cacheKey, data);
+          return data;
+        }),
         shareReplay(1)
       );
+
+    return this.orderItemsCache$;
   }
-
-  return this.orderItemsCache$;
-}
-
-  
 
   //Info de reservas que se han creado en el dia... ///Funciona - Probando ahora con entorno 1 gross pricing (Uk)
 
@@ -221,9 +326,8 @@ export class LiveMetricsService {
       map((reservations) =>
         reservations
           .filter(
-            (r) =>
-              ['Confirmed', 'Started'].includes(r.State) //&&
-              // !!r.AssignedResourceId
+            (r) => ['Confirmed', 'Started'].includes(r.State) //&&
+            // !!r.AssignedResourceId
           )
           .map((r) => r.AssignedResourceId)
       ),
@@ -233,17 +337,16 @@ export class LiveMetricsService {
   }
 
   getADR(): Observable<number> {
-    
     return forkJoin({
-      orderItems: this.getAllOrderItemsInfo(), 
-      occupiedRooms: this.getTotalOccupiedRooms(), 
+      orderItems: this.getAllOrderItemsInfo(),
+      occupiedRooms: this.getTotalOccupiedRooms(),
     }).pipe(
       map(({ orderItems, occupiedRooms }) => {
         if (!orderItems || occupiedRooms === 0) return 0;
 
         // Fecha actual en UTC (para asegurar consistencia)
         const todayStart = new Date();
-        todayStart.setHours(0, 0, 0 );
+        todayStart.setHours(0, 0, 0);
         const todayEnd = new Date();
         todayEnd.setHours(23, 59, 59);
 
@@ -252,11 +355,11 @@ export class LiveMetricsService {
           (item) =>
             // item.Type === 'SpaceOrder' &&
             item.Amount.NetValue //&&
-            // item.ConsumedUtc &&
-            // // new Date(item.ConsumedUtc) >= todayStart &&
-            // // new Date(item.ConsumedUtc) <= todayEnd &&
-            // item.AccountingState !== 'Canceled' &&
-            // item.Options?.CanceledWithReservation === false
+          // item.ConsumedUtc &&
+          // // new Date(item.ConsumedUtc) >= todayStart &&
+          // // new Date(item.ConsumedUtc) <= todayEnd &&
+          // item.AccountingState !== 'Canceled' &&
+          // item.Options?.CanceledWithReservation === false
         );
 
         // Sumamos los ingresos netos
@@ -276,6 +379,4 @@ export class LiveMetricsService {
   makeGetTokensSpeak() {
     console.log(this.getTestingTokensPayload());
   }
-
-
 }

@@ -8,7 +8,7 @@ require("dotenv").config();
 app.use(cors());
 app.use(express.json());
 
-// RUTAS API
+//// RUTAS API
 // Usuarios de prueba
 const testUserRoutes = require("./routes/testUsersRoutes");
 app.use("/api/testUsers", testUserRoutes);
@@ -27,7 +27,7 @@ app.use("/api/dailyMetrics",dailyMetricRoutes)
 
 
 
-// RUTA RAIZ
+//// RUTA RAIZ
 app.get("/", (req, res) => {
   res.send("Servidor funcionando");
 });

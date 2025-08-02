@@ -12,14 +12,19 @@ import { LoginformComponent } from './components/auth/loginform/loginform.compon
 import { DashMainComponent } from './components/dashboard/dash-main/dash-main.component';
 import { TestComponent } from './components/testing/test/test.component';
 import { SidebarComponent } from './components/dashboard/sidebar/sidebar.component';
-
+import { DOCUMENT } from '@angular/common';
 import { AdrComponent } from './components/metrics/revenue/adr/adr.component';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { ChartComponent } from 'ng-apexcharts';
 import { UsersTestComponent } from './components/metrics/users-test/users-test.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { HttpClientModule } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
 
 import Aura from '@primeng/themes/aura';
 import { ConfirmedReservationsComponent } from './components/metrics/reservations-checks/confirmed-reservations/confirmed-reservations.component';
@@ -30,12 +35,14 @@ import { CleanDirtyComponent } from './components/metrics/rooms-info/clean-dirty
 import { TotalRoomsComponent } from './components/metrics/rooms-info/total-rooms/total-rooms.component';
 import { CheckInsOutsComponent } from './components/metrics/reservations-checks/check-ins-outs/check-ins-outs.component';
 import { CalendarComponent } from './components/dashboard/calendar/calendar.component';
+import { HotelDropdownComponent } from './components/dashboard/hotel-dropdown/hotel-dropdown.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    
     
     
   ],
@@ -53,9 +60,12 @@ import { CalendarComponent } from './components/dashboard/calendar/calendar.comp
     AdrComponent,
     TotalRoomsComponent,
     UsersTestComponent,
-    CalendarComponent
+    CalendarComponent,
+    NgSelectModule,
+    FormsModule
   ],
   providers: [
+     
     provideClientHydration(),
     provideFirebaseApp(() =>
       initializeApp({

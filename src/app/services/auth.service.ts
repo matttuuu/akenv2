@@ -1,59 +1,53 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Auth,createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from '@angular/fire/auth';
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { getAuth,onAuthStateChanged } from '@angular/fire/auth';
-
-
+import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class AuthService implements OnInit{
-
-  constructor(
-    private auth: Auth,
-    private router : Router,
-  ) { }
-
+export class AuthService implements OnInit {
+  public currentUser: any = null; // <- propiedad pública
+  constructor(private auth: Auth, private router: Router) {}
 
   ngOnInit(): void {
-    onAuthStateChanged(this.auth,(user) => {
-      if(user) {
+    onAuthStateChanged(this.auth, (user) => {
+      if (user) {
+        this.currentUser = user;
         //Usuario logeado...
-        console.log(user.uid)
-        console.log(user.email)
-        console.log(user.displayName)
+        console.log(user.uid);
+        console.log(user.email);
+        console.log(user.displayName);
+      } else {
+        this.currentUser = null;
       }
-      else{
+    });
+  }
 
-      }
-    })
-  };
-
-
-
-  register ({email, password}: any) {
+  register({ email, password }: any) {
     return createUserWithEmailAndPassword(this.auth, email, password);
   }
 
-  login ({email, password}: any){
-    return signInWithEmailAndPassword(this.auth, email,password )
-    .then(()=>{
-      console.log("Successfully Logged In")
-      this.router.navigate(['/main'])
-    })
-    .catch(error => console.log(error))
-    
+  login({ email, password }: any) {
+    return signInWithEmailAndPassword(this.auth, email, password)
+      .then(() => {
+        console.log('Successfully Logged In');
+        this.router.navigate(['/main']);
+      })
+      .catch((error) => console.log(error));
   }
 
-  logout(){
+  logout() {
     return signOut(this.auth)
-    
-    .then(()=>{
-      console.log("Successfully Logged Off")
-      this.router.navigate(['/login'])
-    })
-    .catch(error => console.log(error))
+      .then(() => {
+        console.log('Successfully Logged Off');
+        this.router.navigate(['/login']);
+      })
+      .catch((error) => console.log(error));
   }
-  
 }
