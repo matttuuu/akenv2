@@ -13,15 +13,14 @@ import { HotelConfigService } from '../../../services/hotel-config.service';
 @Component({
   selector: 'app-hotel-dropdown',
   standalone: true,
-  imports: [NgSelectComponent, NgSelectModule, FormsModule, CommonModule],
+  imports: [ NgSelectModule, FormsModule, CommonModule],
   templateUrl: './hotel-dropdown.component.html',
   styleUrl: './hotel-dropdown.component.css',
 })
 export class HotelDropdownComponent implements OnInit {
- 
-
   hotels: any[] = [];
   selectedHotel: any = null;
+  tokens: any;
 
   constructor(private hotelConfigService: HotelConfigService) {}
   ngOnInit(): void {
@@ -39,12 +38,24 @@ export class HotelDropdownComponent implements OnInit {
     });
   }
 
-  onHotelChange(selectedHotel: any) {
-    const { clientToken, accessToken } = selectedHotel;
-
-    this.hotelConfigService.setTokens(clientToken, accessToken);
-
-    // Ahora le avisamos a los componentes que usan estos tokens para que se recarguen
-    //
+  onHotelChange(hotel: any) {
+    if (hotel && hotel.name) {
+      this.hotelConfigService
+        .getHotelTokensByName(hotel.name)
+        .subscribe((tokens: any) => {
+          if (!tokens || !tokens.clienttoken || !tokens.accesstoken) {
+            console.error(
+              'No se recibieron tokens válidos del backend:',
+              tokens
+            );
+            return;
+          }
+          this.tokens = tokens;
+          this.hotelConfigService.setTokens(
+            tokens.clienttoken,
+            tokens.accesstoken
+          );
+        });
+    }
   }
 }

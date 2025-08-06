@@ -14,6 +14,9 @@ import { AdrComponent } from '../../metrics/revenue/adr/adr.component';
 import { CommonModule } from '@angular/common';
 import { HotelDropdownComponent } from '../hotel-dropdown/hotel-dropdown.component';
 import { HotelConfigService } from '../../../services/hotel-config.service';
+import { User } from '@angular/fire/auth';
+import { Observable } from 'rxjs';
+import { TestComponent } from "../../testing/test/test.component";
 
 // import { CButton } from '';
 
@@ -34,23 +37,38 @@ import { HotelConfigService } from '../../../services/hotel-config.service';
     CalendarComponent,
     AdrComponent,
     HotelDropdownComponent,
-  ],
+    TestComponent
+],
 })
-export class DashMainComponent implements OnInit{
+export class DashMainComponent implements OnInit {
+  currentUser$: Observable<User | null>; //Por convencion, todo lo que lleva un  "$" es un observable (puede cambiar su valor con el tiempo)
+
+  // This gives you todays date.
+ 
+  // This also gives you todays date if you don't alter it on init.
+  private dateToday: Date = new Date();
+  private dateYesterday: Date = new Date();
+
   constructor(
     private authService: AuthService,
     private hotelConfigService: HotelConfigService
-  ) {}
-
-
-  ngOnInit() {
-    this.hotelConfigService.onTokensChange().subscribe(() => {
-      // this.loadMetrics() // 'aca' se deberia ejecutar la funcionalidad que carga las metricas
-    })
+  ) {
+    this.currentUser$ = this.authService.currentUser$;
   }
 
-  
+  currentUser = '';
+  activeTab: 'live' | 'daily' = 'live';
 
+  ngOnInit() {
+    // this.hotelConfigService.onTokensChange().subscribe(() => {
+    //   // this.loadMetrics() // 'aca' se deberia ejecutar la funcionalidad que carga las metricas
+    // });
+    // this.getCurrentUserName()
+    this.dateYesterday = new Date(
+      this.dateToday.setDate(this.dateToday.getDate() - 1)
+    );
+    console.log(this.dateYesterday)
+  }
 
   showCompareModal = false;
 
@@ -65,4 +83,19 @@ export class DashMainComponent implements OnInit{
   signOff() {
     this.authService.logout();
   }
+
+  selectTab(tab: 'live' | 'daily') {
+    this.activeTab = tab;
+  }
+
+  toggleUserMenu() {
+    console.log('Se apretó el svg');
+  }
+  // onHotelChange(selectedHotel: string) {
+  //   this.hotelConfigService
+  //     .getHotelTokensByName(selectedHotel)
+  //     .subscribe((tokens) => {
+  //       // Guarda los tokens y actualiza la información en pantalla
+  //     });
+  // }
 }

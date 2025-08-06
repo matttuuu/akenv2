@@ -1,30 +1,30 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  User,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService implements OnInit {
-  public currentUser: any = null; // <- propiedad pública
-  constructor(private auth: Auth, private router: Router) {}
+export class AuthService {
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
+  public currentUser$ = this.currentUserSubject.asObservable();
 
-  ngOnInit(): void {
+  constructor(private auth: Auth, private router: Router) {
     onAuthStateChanged(this.auth, (user) => {
+      this.currentUserSubject.next(user);
       if (user) {
-        this.currentUser = user;
-        //Usuario logeado...
+        //Usuario logeado... /////QUITAR ESTOS CONSOLE LOGS EN PRODUCCION
         console.log(user.uid);
         console.log(user.email);
         console.log(user.displayName);
-      } else {
-        this.currentUser = null;
       }
     });
   }

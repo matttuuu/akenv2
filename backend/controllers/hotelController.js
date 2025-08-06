@@ -11,6 +11,17 @@ const getHotels = async(req,res) => {
     }
 }
 
+const getHotelTokens= async(req, res) => {
+    try {
+        const hotelName = req.query.name; // <-- Cambia esto
+        const tokens = await hotelModel.getHotelTokensByName(hotelName);
+        res.json(tokens);
+    }
+    catch (error) {
+        console.log(error); 
+        res.status(500).send("Error obteniendo tokens del hotel");
+    }
+}
 //const saveHotel
 
-module.exports = {getHotels}
+module.exports = {getHotels,getHotelTokens}

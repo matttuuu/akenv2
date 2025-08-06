@@ -36,12 +36,18 @@ import { TotalRoomsComponent } from './components/metrics/rooms-info/total-rooms
 import { CheckInsOutsComponent } from './components/metrics/reservations-checks/check-ins-outs/check-ins-outs.component';
 import { CalendarComponent } from './components/dashboard/calendar/calendar.component';
 import { HotelDropdownComponent } from './components/dashboard/hotel-dropdown/hotel-dropdown.component';
+import { SingleDayCardComponent } from './components/metrics/daily-container/single-day-card/single-day-card.component';
+import { CompareRangeCardComponent } from './components/metrics/daily-container/compare-range-card/compare-range-card.component';
+import { PreviousDayComponentComponent } from './components/metrics/daily-container/previous-day-component/previous-day-component.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    SingleDayCardComponent,
+    CompareRangeCardComponent,
+    PreviousDayComponentComponent,
     
     
     

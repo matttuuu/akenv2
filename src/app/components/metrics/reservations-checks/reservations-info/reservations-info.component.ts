@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import {
   ChartComponent,
   ApexAxisChartSeries,
@@ -8,9 +8,9 @@ import {
   ApexPlotOptions,
   ApexTitleSubtitle,
 } from 'ng-apexcharts';
-
 import { LiveMetricsService } from '../../../../services/live-metrics.service';
-import { forkJoin } from 'rxjs';
+import { HotelConfigService } from '../../../../services/hotel-config.service';
+import { forkJoin, Subscription } from 'rxjs';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -19,62 +19,66 @@ export type ChartOptions = {
   dataLabels: ApexDataLabels;
   plotOptions: ApexPlotOptions;
   title: ApexTitleSubtitle;
+  labels: any;
+  responsive: ApexResponsive[];
 };
 
 @Component({
-    selector: 'app-reservations-info',
-    templateUrl: './reservations-info.component.html',
-    styleUrls: ['./reservations-info.component.css'],
-    imports: [ChartComponent]
+  selector: 'app-reservations-info',
+  templateUrl: './reservations-info.component.html',
+  styleUrls: ['./reservations-info.component.css'],
+  imports: [ChartComponent],
 })
-export class ReservationsInfoComponent implements OnInit {
+export class ReservationsInfoComponent implements OnInit, OnDestroy {
   @ViewChild('chart') chart!: ChartComponent;
-  public chartOptions: Partial<ChartOptions> = {}; // Inicializamos vacío
+  public chartOptions: Partial<ChartOptions> = {};
+  private tokensSub?: Subscription;
 
-  constructor(private liveMetricService: LiveMetricsService) {}
+  constructor(
+    private liveMetricService: LiveMetricsService,
+    private hotelConfigService: HotelConfigService
+  ) {}
 
   ngOnInit(): void {
-    // Obtenemos el valor confirmado
+    if (
+      this.hotelConfigService.getClientToken() &&
+      this.hotelConfigService.getAccessToken()
+    ) {
+      this.loadChart();
+    }
+    this.tokensSub = this.hotelConfigService.onTokensChange().subscribe(() => {
+      this.loadChart();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.tokensSub?.unsubscribe();
+  }
+
+  private loadChart() {
     forkJoin({
       confirmedReservations:
         this.liveMetricService.getTotalConfirmedReservations(),
       canceledReservations:
         this.liveMetricService.getTotalCanceledReservations(),
     }).subscribe(({ confirmedReservations, canceledReservations }) => {
-      // Una vez recibido el valor, se asigna a chartOptions
       this.chartOptions = {
-        series: [
+        series: [confirmedReservations, canceledReservations],
+        chart: { height: 350, width: 500, type: 'donut' },
+        labels: ['Confirmed', 'Canceled'],
+        responsive: [
           {
-            name: 'Reservas confirmadas',
-            data: [confirmedReservations],
-          },
-          {
-            name: 'Reservas canceladas',
-            data: [canceledReservations], // Puedes hacer esto dinámico también
+            breakpoint: 600,
+            options: {
+              chart: { width: 300 },
+              legend: { position: 'bottom' },
+              title: { text: 'Check Ins / Check Outs' },
+              labels: {
+                show: true
+              }
+            },
           },
         ],
-        chart: {
-          type: 'bar',
-          height: 350,
-          width: 500,
-        },
-        plotOptions: {
-          bar: {
-            horizontal: true,
-            columnWidth: '55%',
-            borderRadius: 4,
-          },
-        },
-        dataLabels: {
-          enabled: true,
-        },
-        xaxis: {
-          categories: [''],
-        },
-        title: {
-          text: 'Reservas',
-        },
-        
       };
     });
   }

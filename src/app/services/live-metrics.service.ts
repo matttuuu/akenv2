@@ -16,7 +16,12 @@ export class LiveMetricsService {
   constructor(
     private http: HttpClient,
     private hotelConfig: HotelConfigService
-  ) {}
+  ) {
+    // Limpia el cache cuando cambian los tokens
+    this.hotelConfig.onTokensChange().subscribe(() => {
+      this.refreshReservationsInfo();
+    });
+  }
 
   //Variables cache propias en codigo
 
@@ -60,24 +65,20 @@ export class LiveMetricsService {
     //Tokens de prueba : Uk
     //metodo de prueba para verificar que se devuelva un objeto con ambos strings
     return {
-      ClientToken: this.hotelConfig.getTestingClientToken(),
-      AccessToken: this.hotelConfig.getTestingAccessToken(),
+      ClientToken: this.hotelConfig.getTestingClientToken(), //Podria hacer que en vez de devolver un string hardcodeado, tome como parametro el hotelName y devuelva los tokens de ese hotel!
+      AccessToken: this.hotelConfig.getTestingAccessToken(), //
     };
   }
 
-
-  private getHotelTokens(hotelName: String) { 
-    //Metodo que me permite obtener par de tokens 
+  private getHotelTokens(hotelName: String) {
+    ///seguir
+    //Metodo que me permite obtener par de tokens
     this.hotelConfig.getHotelsList().subscribe({
-      next: (response) => {
-
-      }
-    })
+      next: (response) => {},
+    });
   }
 
-  private changeHotel() {
-    
-  }
+  private getSelectedHotelTokens(hotelName: any) {}
 
   //Datos hotel mews
   //total available rooms?
@@ -116,7 +117,7 @@ export class LiveMetricsService {
     ).toISOString();
 
     const payload = {
-      ...this.getTestingTokensPayload(),
+      ...this.getTokensPayload(),
       StartUtc: startOfDay,
       EndUtc: endOfDay,
     };
@@ -169,7 +170,7 @@ export class LiveMetricsService {
     ).toISOString();
 
     const payload = {
-      ...this.getTestingTokensPayload(),
+      ...this.getTokensPayload(),
       StartUtc: startOfDay,
       EndUtc: endOfDay,
     };
@@ -222,7 +223,7 @@ export class LiveMetricsService {
     ).toISOString();
 
     const payload = {
-      ...this.getTestingTokensPayload(),
+      ...this.getTokensPayload(),
       Limitation: { Count: 500 },
       CreatedUtc: {
         StartUtc: startOfDay,
@@ -377,6 +378,6 @@ export class LiveMetricsService {
   //Info de ingresos en vivo (Sumado despues para ser guardado en las metricas daily) - ADR y Total (Daily) Revenue
 
   makeGetTokensSpeak() {
-    console.log(this.getTestingTokensPayload());
+    console.log(this.getTokensPayload()); //Tambien cambiado por getTokensPayload()
   }
 }

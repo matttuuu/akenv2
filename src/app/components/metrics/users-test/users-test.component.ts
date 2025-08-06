@@ -209,7 +209,7 @@ export class UsersTestComponent implements OnInit {
           },
         },
         title: {
-          text: 'Edad de usuarios de prueba',
+          text: 'Edad de usuarios de prueba (console logs) ',
           floating: true,
           offsetY: 330,
           align: 'center',
