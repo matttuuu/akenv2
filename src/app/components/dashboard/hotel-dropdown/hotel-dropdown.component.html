@@ -1,19 +1,23 @@
-<div class="dropdown-wrapper">
-  <label for="hotelSelect">Choose a hotel:</label>
-  <select
-    id="hotelSelect"
-    class="dropdown"
-    [(ngModel)]="selectedHotel"
-    (ngModelChange)="onHotelChange($event)"
-  >
-    <option [ngValue]="null" disabled selected>Select a hotel</option>
-    <option *ngFor="let hotel of hotels" [ngValue]="hotel">
-      {{ hotel.name }}
-    </option>
-  </select>
-</div>
+<div class="layout-main">
+  <div class="dropdown-wrapper">
+    <label for="hotelSelect">Choose a hotel:</label>
+    <select
+      id="hotelSelect"
+      class="dropdown"
+      [(ngModel)]="selectedHotel"
+      (ngModelChange)="onHotelChange($event)"
+    >
+      <option [ngValue]="null" disabled selected>Select a hotel</option>
+      <option *ngFor="let hotel of hotels" [ngValue]="hotel">
+        {{ hotel.name }}
+      </option>
+    </select>
+    
+  </div>
+  <button class="btn-add-hotel">Add hotel (test)</button>
 
-<!-- Preview del hotel seleccionado -->
-<div class="selected-value" *ngIf="selectedHotel">
-  Selected Hotel: <strong>{{ selectedHotel.name }}</strong>
+  <!-- Preview del hotel seleccionado -->
+  <div class="selected-value" *ngIf="selectedHotel">
+    Selected Hotel: <strong>{{ selectedHotel.name }}</strong>
+  </div>
 </div>

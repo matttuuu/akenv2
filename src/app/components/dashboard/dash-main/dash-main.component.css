@@ -94,6 +94,8 @@ body {
   width: 1300px;
   height: 800px;
   text-align: center;
+  align-items: center;
+  justify-content: center;
 }
 
 

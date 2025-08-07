@@ -1,3 +1,9 @@
+.layout-main{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .dropdown-wrapper {
   display: flex;
   flex-direction: column;
@@ -30,4 +36,17 @@ label {
   margin-top: 10px;
   font-size: 14px;
   color: #333;
+}
+
+.btn-add-hotel{
+  background-color: #bbbbbb;
+  color: rgb(36, 36, 36);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  height: 30px;
+  margin-top: 32px;
+  margin-left: 8px;
 }

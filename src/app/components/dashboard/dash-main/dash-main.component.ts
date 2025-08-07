@@ -17,6 +17,10 @@ import { HotelConfigService } from '../../../services/hotel-config.service';
 import { User } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 import { TestComponent } from "../../testing/test/test.component";
+import { PreviousDayComponent } from '../../metrics/daily-container/previous-day/previous-day.component';
+import { SingleDayCardComponent } from "../../metrics/daily-container/single-day-card/single-day-card.component";
+import { CompareRangeCardComponent } from "../../metrics/daily-container/compare-range-card/compare-range-card.component";
+
 
 // import { CButton } from '';
 
@@ -37,7 +41,10 @@ import { TestComponent } from "../../testing/test/test.component";
     CalendarComponent,
     AdrComponent,
     HotelDropdownComponent,
-    TestComponent
+    TestComponent,
+    PreviousDayComponent,
+    SingleDayCardComponent,
+    CompareRangeCardComponent
 ],
 })
 export class DashMainComponent implements OnInit {

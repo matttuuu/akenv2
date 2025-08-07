@@ -38,19 +38,14 @@ import { CalendarComponent } from './components/dashboard/calendar/calendar.comp
 import { HotelDropdownComponent } from './components/dashboard/hotel-dropdown/hotel-dropdown.component';
 import { SingleDayCardComponent } from './components/metrics/daily-container/single-day-card/single-day-card.component';
 import { CompareRangeCardComponent } from './components/metrics/daily-container/compare-range-card/compare-range-card.component';
-import { PreviousDayComponentComponent } from './components/metrics/daily-container/previous-day-component/previous-day-component.component';
+
+import { PreviousDayComponent } from './components/metrics/daily-container/previous-day/previous-day.component';
 
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    SingleDayCardComponent,
-    CompareRangeCardComponent,
-    PreviousDayComponentComponent,
-    
-    
-    
+    AppComponent,  
   ],
   imports: [
     BrowserModule,
