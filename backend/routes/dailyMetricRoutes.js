@@ -8,4 +8,11 @@ router.get("/getDailyMetrics",dailyMetricController.getDailyMetrics);
 
 router.post("/addDailyMetric",dailyMetricController.addDailyMetric)
 
+router.get("/getDailyMetricsByRange", dailyMetricController.getDailyMetricsByRange);
+
+router.get("/getDailyMetricByDate", dailyMetricController.getDailyMetricByDate)
+
+//router.get("/getDailyMetricsBySingleDate", dailyMetricController.getDailyMetricBySingleDate); //no se usa por ahora
+
+
 module.exports = router

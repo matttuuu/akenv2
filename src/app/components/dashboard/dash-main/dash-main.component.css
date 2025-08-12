@@ -10,6 +10,7 @@ body {
    padding: 0;
 }
 
+
 .layout-main {
   display: flex;
   /* flex-direction: column; */
@@ -177,4 +178,13 @@ body {
 
 }
 
+.users-list-side-icon{
+  cursor: pointer;
 
+}
+
+.amek-sidebar-logo{
+  width: 145px;
+  height: 66px;
+ 
+}

@@ -5,7 +5,7 @@
       id="hotelSelect"
       class="dropdown"
       [(ngModel)]="selectedHotel"
-      (ngModelChange)="onHotelChange($event)"
+      (ngModelChange)="onHotelChangeDB($event)"
     >
       <option [ngValue]="null" disabled selected>Select a hotel</option>
       <option *ngFor="let hotel of hotels" [ngValue]="hotel">

@@ -1,11 +1,54 @@
 <div class="layout-main">
-    <div class="daily-data-container">
-        <div class="test 1 ">checkins</div>
-        <div class="test 2 ">checkouts</div>
-        <div class="test 3 ">cancelled reserves</div>
-        <div class="test 4" >confirmed reserves</div>
-        
-        <div class="testchart 1 check-ins-out-pie"> check ins and outs graph here</div>
-        <div class="testchart 2">adr title here?</div>
+  <div class="daily-data-container">
+    <div class="infobox checkins">
+      <p class="info-title">Total Check-Ins</p>
+      <div class="info-center">
+        <h3 *ngIf="hotelDataYesterday">{{ hotelDataYesterday.checkins }}</h3>
+        <h3 *ngIf="!hotelDataYesterday">-</h3>
+      </div>
+      <div class="info-footer"><p>Check-Ins</p></div>
     </div>
+
+    <div class="infobox checkouts">
+      <p class="info-title">Total Check-Outs</p>
+      <div class="info-center">
+        <h3 *ngIf="hotelDataYesterday">{{ hotelDataYesterday.checkouts }}</h3>
+        <h3 *ngIf="!hotelDataYesterday">-</h3>
+      </div>
+      <div class="info-footer"><p>Check-Outs</p></div>
+    </div>
+
+    <div class="infobox canceled-reserves">
+      <p class="info-title">Total canceled Reservations</p>
+      <div class="info-center">
+        <h3 *ngIf="hotelDataYesterday">
+          {{ hotelDataYesterday.cancelledreserves }}
+        </h3>
+        <h3 *ngIf="!hotelDataYesterday">-</h3>
+      </div>
+      <div class="info-footer"><p>Canceled reservations</p></div>
+    </div>
+
+    <div class="infobox confirmed-reserves">
+      <p class="info-title">Total Confirmed Reservations</p>
+      <div class="info-center">
+        <h3 *ngIf="hotelDataYesterday">
+          {{ hotelDataYesterday.confirmedreserves }}
+        </h3>
+        <h3 *ngIf="!hotelDataYesterday">-</h3>
+      </div>
+      <div class="info-footer"><p>Confirmed reservations</p></div>
+    </div>
+
+    <div class="chartbox check-ins-out-pie">check ins and outs graph here</div>
+
+    <div class="chartbox adr-data">
+      <p class="info-title">Average Daily Rate</p>
+      <div class="info-center">
+        <h3 *ngIf="hotelDataYesterday">{{ hotelDataYesterday.adr }}</h3>
+        <h3 *ngIf="!hotelDataYesterday">-</h3>
+      </div>
+      <div class="info-footer"><p>ADR</p></div>
+    </div>
+  </div>
 </div>

@@ -1,5 +1,8 @@
-import { Component, Signal, signal } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Signal, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DashMainComponent } from '../dash-main/dash-main.component';
+import { DateService } from '../../../services/date.service';
+import { DailyMetricsService } from '../../../services/daily-metrics.service';
 
 @Component({
   selector: 'app-calendar',
@@ -8,16 +11,31 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
 })
-export class CalendarComponent {
+export class CalendarComponent implements OnInit{
   selectMode: 'single' | 'range' = 'range';
+
+  @Output() selectModeChanged = new EventEmitter<'range' | 'single'>();
+
+
 
   today = new Date();
   viewDate = signal(new Date(this.today));
 
   startDate: Date | null = null;
+  //test startdate
+  
   endDate: Date | null = null;
 
   weekDays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+
+  constructor(private dashMainComponent: DashMainComponent, private dateService: DateService, dailyMetricService: DailyMetricsService) {}
+
+  
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
+
+  
 
   currentYear() {
     return this.viewDate().getFullYear();
@@ -28,7 +46,7 @@ export class CalendarComponent {
   }
 
   get currentMonthName() {
-  return this.viewDate().toLocaleString('en-US', { month: 'long' });
+    return this.viewDate().toLocaleString('en-US', { month: 'long' });
   }
 
   prevMonth() {
@@ -75,9 +93,12 @@ export class CalendarComponent {
   }
 
   selectDate(date: Date) {
+    //Logica de selección de fechas
+
     if (this.selectMode === 'single') {
       this.startDate = date;
       this.endDate = null;
+      // console.log('Día seleccionado (modo single):', this.startDate); //CONSOLE LOG DE PRUEBA
     } else {
       if (!this.startDate || this.endDate) {
         this.startDate = date;
@@ -88,6 +109,10 @@ export class CalendarComponent {
       } else {
         this.endDate = date;
       }
+      // console.log('Fechas seleccionadas (modo rango):', {
+      //   start: this.startDate,
+      //   end: this.endDate,
+      // }); //CONSOLE LOG DE PRUEBA
     }
   }
 
@@ -95,6 +120,9 @@ export class CalendarComponent {
     this.selectMode = this.selectMode === 'range' ? 'single' : 'range';
     this.startDate = null;
     this.endDate = null;
+    //testin
+
+    this.selectModeChanged.emit(this.selectMode); //
   }
 
   isSelected(date: Date) {
@@ -109,5 +137,37 @@ export class CalendarComponent {
       return date > this.startDate && date < this.endDate;
     }
     return false;
+  }
+
+  openModal() {
+    this.dashMainComponent.openModal(); //Lo que podria hacer es tener 2 metodos en esta clase, algo asi como openDayModal y openRangeModal,
+  }
+
+  closeModal() {
+    this.dashMainComponent.closeModal();
+  }
+
+  selectModalRangeType(selectedModal: 'single' | 'range') {
+    //PROBANDO ESTO AHORA
+    this.selectMode = selectedModal;
+  }
+
+  ////////////////////////////////////////  TEST DE MODALES
+
+  openModalWithSingleDay() {}
+
+  openModalWithRange() {}
+
+  ////////////////////////////////////////
+  confirmSelection() {
+    this.openModal(); //Abro el modal -- Este modal tiene que tener o el componente de rango, o el de día, segun este el boton puesto
+    if (this.selectMode === 'single') {
+      console.log('Día seleccionado (modo single):', this.startDate);
+    } else if (this.selectMode === 'range') {
+      console.log('Fechas seleccionadas (modo rango):', {
+        start: this.startDate,
+        end: this.endDate,
+      });
+    }
   }
 }

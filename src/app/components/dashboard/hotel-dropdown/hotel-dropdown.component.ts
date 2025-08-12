@@ -13,7 +13,7 @@ import { HotelConfigService } from '../../../services/hotel-config.service';
 @Component({
   selector: 'app-hotel-dropdown',
   standalone: true,
-  imports: [ NgSelectModule, FormsModule, CommonModule],
+  imports: [NgSelectModule, FormsModule, CommonModule],
   templateUrl: './hotel-dropdown.component.html',
   styleUrl: './hotel-dropdown.component.css',
 })

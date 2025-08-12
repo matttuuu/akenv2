@@ -78,7 +78,7 @@ export class LiveMetricsService {
     });
   }
 
-  private getSelectedHotelTokens(hotelName: any) {}
+  
 
   //Datos hotel mews
   //total available rooms?

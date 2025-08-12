@@ -40,12 +40,16 @@ import { SingleDayCardComponent } from './components/metrics/daily-container/sin
 import { CompareRangeCardComponent } from './components/metrics/daily-container/compare-range-card/compare-range-card.component';
 
 import { PreviousDayComponent } from './components/metrics/daily-container/previous-day/previous-day.component';
+import { DailyDropdownComponent } from './components/metrics/daily-container/daily-dropdown/daily-dropdown.component';
+
 
 
 
 @NgModule({
   declarations: [
-    AppComponent,  
+    AppComponent,
+    
+   
   ],
   imports: [
     BrowserModule,

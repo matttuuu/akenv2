@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 
+
 @Injectable({
   providedIn: 'root',
 })
@@ -26,7 +27,7 @@ export class HotelConfigService {
     return this.tokensChanged.asObservable();
   }
 
-  setTokens(clientToken: string, accessToken: string) {
+  setTokens(clientToken: string, accessToken: string) { //Funcion que hace que se seteen los tokens de cliente y acceso de cada hotel  
     this.clientToken = clientToken;
     this.accessToken = accessToken;
     this.notifyTokensChange();
@@ -60,4 +61,5 @@ export class HotelConfigService {
       params: { name: hotelName },
     });
   }
+  
 }

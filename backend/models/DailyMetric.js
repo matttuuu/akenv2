@@ -1,3 +1,4 @@
+const { get } = require("http");
 const pool = require("../db");
 
 const getAllDailyMetrics = async () => {
@@ -5,15 +6,56 @@ const getAllDailyMetrics = async () => {
   return result.rows;
 };
 
-const getDailyMetricBySingleDate = async (metricDate) => { //Seleccionamos un registro de 'daily_metrics' por fecha especifica (timestamp)
-  const result = await pool.query(`SELECT * FROM daily_metrics
-    WHERE createdat:: date = `,metricDate); // ej: '2025-07-24' - Este formato debe salir del calendario 
-  return result
+const getDailyMetricByDateAndHotel = async (metricDate, hotelId) => { //NUEVA, probando
+  try {
+    const query = `
+      SELECT * FROM daily_metrics
+      WHERE DATE(createdat) = $1
+      AND hotel_id = $2
+    `;
+
+    const result = await pool.query(query, [metricDate, hotelId]);
+    return result.rows;
+  } catch (error) {
+    console.error("Error en getDailyMetricByDateAndHotel", error);
+    throw error;
+  }
 };
 
-const getDailyMetricsByDateRange = async () => { //Seleccionamos mas de un registro de 'daily_metrics' por rango de fechas (between timestamp)
-  
-}
+const getDailyMetricBySingleDate = async (metricDate) => {
+  //Seleccionamos un registro de 'daily_metrics' por fecha especifica (timestamp) /////Se podra usar tambien en la seccion del dia de ayer en daily?
+
+  try {
+    const query = `
+            SELECT * FROM daily_metrics
+            WHERE DATE(createdat) = $1
+            `;
+
+    const result = await pool.query(query, [metricDate]);
+    return result.rows; // Devuelve el primer registro encontrado ////PROBANDO : [0] o sin nada
+  } catch (error) {
+    console.error("Error en getDailyMetricsBySingleDate", error);
+    throw error;
+  }
+};
+
+const getDailyMetricsByDateRange = async (startDate, endDate) => {
+  //Posiblemente tenga que modificar esta para saber el id
+  try {
+    // Asegúrate de que las fechas estén en el formato correcto -----ERA ACA, EN EL MODELO, EN DONDE ESTABA EL ERRROR
+    const query = `
+            SELECT * FROM daily_metrics 
+            WHERE createdat BETWEEN $1 AND $2 
+            ORDER BY createdat ASC
+        `;
+
+    const result = await pool.query(query, [startDate, endDate]);
+    return result.rows; // Devuelve las filas directamente
+  } catch (error) {
+    console.error("Error en getDailyMetricsByDateRange:", error);
+    throw error; // Lanza el error para que lo maneje el controlador
+  }
+};
 
 // Inserta una métrica usando los tokens para buscar el hotel_id
 const addDailyMetric = async (
@@ -56,4 +98,11 @@ const addDailyMetric = async (
 
 //const modifyDailyMetric?
 
-module.exports = { getAllDailyMetrics, addDailyMetric };
+module.exports = {
+  getAllDailyMetrics,
+  addDailyMetric,
+  getDailyMetricsByDateRange,
+  getDailyMetricBySingleDate,
+  getDailyMetricByDateAndHotel,
+}; //byRange probado en postman, vamos a ver si anda single date en previous day
+// Si anda tambien en previous day, se puede usar en el calendario para dia especifico tambien

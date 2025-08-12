@@ -16,11 +16,11 @@ import { HotelDropdownComponent } from '../hotel-dropdown/hotel-dropdown.compone
 import { HotelConfigService } from '../../../services/hotel-config.service';
 import { User } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
-import { TestComponent } from "../../testing/test/test.component";
+import { TestComponent } from '../../testing/test/test.component';
 import { PreviousDayComponent } from '../../metrics/daily-container/previous-day/previous-day.component';
-import { SingleDayCardComponent } from "../../metrics/daily-container/single-day-card/single-day-card.component";
-import { CompareRangeCardComponent } from "../../metrics/daily-container/compare-range-card/compare-range-card.component";
-
+import { SingleDayCardComponent } from '../../metrics/daily-container/single-day-card/single-day-card.component';
+import { CompareRangeCardComponent } from '../../metrics/daily-container/compare-range-card/compare-range-card.component';
+import { DailyDropdownComponent } from '../../metrics/daily-container/daily-dropdown/daily-dropdown.component';
 
 // import { CButton } from '';
 
@@ -44,17 +44,19 @@ import { CompareRangeCardComponent } from "../../metrics/daily-container/compare
     TestComponent,
     PreviousDayComponent,
     SingleDayCardComponent,
-    CompareRangeCardComponent
-],
+    CompareRangeCardComponent,
+    DailyDropdownComponent,
+  ],
 })
 export class DashMainComponent implements OnInit {
   currentUser$: Observable<User | null>; //Por convencion, todo lo que lleva un  "$" es un observable (puede cambiar su valor con el tiempo)
 
   // This gives you todays date.
- 
+
   // This also gives you todays date if you don't alter it on init.
   private dateToday: Date = new Date();
   private dateYesterday: Date = new Date();
+  formattedDateYesterday!: string;
 
   constructor(
     private authService: AuthService,
@@ -63,28 +65,47 @@ export class DashMainComponent implements OnInit {
     this.currentUser$ = this.authService.currentUser$;
   }
 
-  currentUser = '';
-  activeTab: 'live' | 'daily' = 'live';
+  logoPath = 'assets/ameklogo-side.png';
+
+  currentUser = ''; //Se usa?
+  activeTab: 'live' | 'daily' = 'live'; //Para saber que tab esta activo
+  selectedRangeMode: 'range' | 'single' = 'range'; // Para saber que modo de rango esta activo
 
   ngOnInit() {
     // this.hotelConfigService.onTokensChange().subscribe(() => {
     //   // this.loadMetrics() // 'aca' se deberia ejecutar la funcionalidad que carga las metricas
     // });
     // this.getCurrentUserName()
-    this.dateYesterday = new Date(
-      this.dateToday.setDate(this.dateToday.getDate() - 1)
-    );
-    console.log(this.dateYesterday)
+    // Calcular ayer
+    this.dateYesterday = new Date();
+    this.dateYesterday.setDate(this.dateToday.getDate() - 1);
+    // Formatear como d/m/yyyy
+    this.formattedDateYesterday =
+      this.dateYesterday.toLocaleDateString('es-AR');
+
+    // Mostrar en consola
+    console.log(this.formattedDateYesterday); // Ejemplo: "8/8/2025"
+
+    
+    // // Si lo querés enviar al backend como YYYY-MM-DD
+    // const isoFormatted = this.dateYesterday.toISOString().split('T')[0]; 
+    // console.log(isoFormatted); // "2025-08-08"
   }
 
   showCompareModal = false;
 
   openModal() {
+    //Abro el modal
     this.showCompareModal = true;
   }
 
   closeModal() {
+    //Cierro el modal
     this.showCompareModal = false;
+  }
+
+  onCalendarModeChange(mode: 'range' | 'single') {
+    this.selectedRangeMode = mode;
   }
 
   signOff() {
@@ -98,11 +119,17 @@ export class DashMainComponent implements OnInit {
   toggleUserMenu() {
     console.log('Se apretó el svg');
   }
-  // onHotelChange(selectedHotel: string) {
-  //   this.hotelConfigService
-  //     .getHotelTokensByName(selectedHotel)
-  //     .subscribe((tokens) => {
-  //       // Guarda los tokens y actualiza la información en pantalla
-  //     });
-  // }
+
+  ////////////////TEST DE MODALES (funciones consumidas por calendar.component.ts)////////////////////
+  /////DEBERIAN TENER EL MISMO NOMBRE?
+
+  openModalWithSingleDay() {
+    // Lógica para abrir el modal de día
+    this.showCompareModal = true; // Aquí podrías abrir un modal específico para el día
+  }
+
+  openModalWithRange() {
+    // Lógica para abrir el modal de rango
+    this.showCompareModal = true; // Aquí podrías abrir un modal específico para el rango
+  }
 }

@@ -1,7 +1,7 @@
 <div class="layout-main">
   <div class="sidebar">
     <div class="sidebar-title">
-      <img src="src/assets/ameklogo-side.png" alt="amek-side-logo" />
+      <img src="assets/ameklogo-side.png" alt="amek-side-logo-img" class="amek-sidebar-logo" />
       <br />
       
       <!-- <svg width="64px" height="64px" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5 5.5C5 4.11929 6.11929 3 7.5 3C8.88071 3 10 4.11929 10 5.5C10 6.88071 8.88071 8 7.5 8C6.11929 8 5 6.88071 5 5.5Z" fill="#000000"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M7.5 0C3.35786 0 0 3.35786 0 7.5C0 11.6421 3.35786 15 7.5 15C11.6421 15 15 11.6421 15 7.5C15 3.35786 11.6421 0 7.5 0ZM1 7.5C1 3.91015 3.91015 1 7.5 1C11.0899 1 14 3.91015 14 7.5C14 9.34956 13.2275 11.0187 11.9875 12.2024C11.8365 10.4086 10.3328 9 8.5 9H6.5C4.66724 9 3.16345 10.4086 3.01247 12.2024C1.77251 11.0187 1 9.34956 1 7.5Z" fill="#000000"></path> </g></svg> -->
@@ -9,8 +9,8 @@
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink"
-        width="64px"
-        height="64px"
+        width="55px"
+        height="55px"
         x="px"
         y="0px"
         viewBox="0 0 256 256"
@@ -33,18 +33,17 @@
           </g>
         </g>
       </svg></a>
+      <br>
+      <a class="users-list-side-icon">
+        <svg fill="#ffffff" viewBox="0 0 256 256" id="Flat" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff" width="69px" height="69px"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M148,80a4.0002,4.0002,0,0,1,4-4h96a4,4,0,0,1,0,8H152A4.0002,4.0002,0,0,1,148,80Zm100,44H152a4,4,0,0,0,0,8h96a4,4,0,0,0,0-8Zm0,48H176a4,4,0,0,0,0,8h72a4,4,0,0,0,0-8ZM145.85742,191.00293a3.9998,3.9998,0,1,1-7.74707,1.99414,60.02112,60.02112,0,0,0-116.2207,0,3.9998,3.9998,0,1,1-7.74707-1.99414,67.92968,67.92968,0,0,1,45.65381-47.93555,44,44,0,1,1,40.40722,0A67.92968,67.92968,0,0,1,145.85742,191.00293ZM80,140a36,36,0,1,0-36-36A36.04061,36.04061,0,0,0,80,140Z"></path> </g></svg>
+      </a>
       
     </div>
-    <!--Solucionar logo que no se encuentra-->
-    <!-- <ul class="sidebar-tabs">
-      <li (click)="selectTab('live')" [class.active]="activeTab === 'live'">
-        Live
-      </li>
-      <li (click)="selectTab('daily')" [class.active]="activeTab === 'daily'">
-        Daily
-      </li>
-    </ul> -->
+   
   </div>
+
+
+
 
   <div class="main-content">
     <div class="central-content">
@@ -68,7 +67,6 @@
         </ul>
       </div>
       <!---->
-
       <section
         class="metrics-section live-metrics"
         *ngIf="activeTab === 'live'"
@@ -91,20 +89,20 @@
       >
         <h3>Daily Metrics</h3>
         <p style="font-size: 10px; margin-top: -7px;">Showing data from previous day</p>
-        <app-hotel-dropdown></app-hotel-dropdown>
+        <app-daily-dropdown></app-daily-dropdown>
         <!--Seccion de metricas dia previo-->
         <app-previous-day></app-previous-day>
-        <app-calendar></app-calendar>
+        <app-calendar (selectModeChanged)="onCalendarModeChange($event)"></app-calendar>
         <app-users-test></app-users-test>
 
-        <button (click)="openModal()">Abrir ventana modal</button>
+        <!-- <button (click)="openModal()">Abrir ventana modal</button> -->
 
-        <div class="overlay" *ngIf="showCompareModal">
-          <div class="compare-modal">
+        <div class="overlay" *ngIf="showCompareModal"> <!--Overlay de modal-->
+          <div class="compare-modal"> <!-- Ventana modal de comparacion -->
             <h2>Modal simple</h2>
 
-            <app-compare-range-card></app-compare-range-card>
-            <app-single-day-card></app-single-day-card> <!--Clean dirty y check ins/outs para probar-->
+            <app-compare-range-card *ngIf="selectedRangeMode === 'range'" ></app-compare-range-card> <!--Agregar el (click) !!!!!!!!!!!!!!!!!!!!!!!!-->
+            <app-single-day-card *ngIf="selectedRangeMode === 'single'" ></app-single-day-card> <!--Clean dirty y check ins/outs para probar-->
            
             <!-- <app-clean-dirty></app-clean-dirty>
             <app-check-ins-outs></app-check-ins-outs>
