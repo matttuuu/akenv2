@@ -1,8 +1,17 @@
-import { Component, EventEmitter, OnInit, Output, Signal, signal } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  Signal,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashMainComponent } from '../dash-main/dash-main.component';
 import { DateService } from '../../../services/date.service';
 import { DailyMetricsService } from '../../../services/daily-metrics.service';
+import { CalendarDataService } from '../../../services/calendar-data.service';
+
 
 @Component({
   selector: 'app-calendar',
@@ -11,31 +20,41 @@ import { DailyMetricsService } from '../../../services/daily-metrics.service';
   standalone: true,
   imports: [CommonModule],
 })
-export class CalendarComponent implements OnInit{
+export class CalendarComponent implements OnInit {
   selectMode: 'single' | 'range' = 'range';
 
   @Output() selectModeChanged = new EventEmitter<'range' | 'single'>();
-
-
 
   today = new Date();
   viewDate = signal(new Date(this.today));
 
   startDate: Date | null = null;
-  //test startdate
-  
+
   endDate: Date | null = null;
 
   weekDays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
-  constructor(private dashMainComponent: DashMainComponent, private dateService: DateService, dailyMetricService: DailyMetricsService) {}
+  constructor(
+    private dashMainComponent: DashMainComponent,
+    private dateService: DateService,
+    private dailyMetricService: DailyMetricsService,
+    private calendarDataService: CalendarDataService
+  ) {}
 
-  
+  selectedHotelId: string = '1';
+
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.dailyMetricService.yesterdayData$.subscribe({
+      next: (data) => {
+        if (data && data.length > 0) {
+          this.selectedHotelId = data[0].hotel_id.toString();
+        }
+      },
+      error: (err) => {
+        console.error('Error en la suscripción del hotel ID:', err);
+      },
+    });
   }
-
-  
 
   currentYear() {
     return this.viewDate().getFullYear();
@@ -93,12 +112,9 @@ export class CalendarComponent implements OnInit{
   }
 
   selectDate(date: Date) {
-    //Logica de selección de fechas
-
     if (this.selectMode === 'single') {
       this.startDate = date;
       this.endDate = null;
-      // console.log('Día seleccionado (modo single):', this.startDate); //CONSOLE LOG DE PRUEBA
     } else {
       if (!this.startDate || this.endDate) {
         this.startDate = date;
@@ -109,10 +125,6 @@ export class CalendarComponent implements OnInit{
       } else {
         this.endDate = date;
       }
-      // console.log('Fechas seleccionadas (modo rango):', {
-      //   start: this.startDate,
-      //   end: this.endDate,
-      // }); //CONSOLE LOG DE PRUEBA
     }
   }
 
@@ -120,9 +132,8 @@ export class CalendarComponent implements OnInit{
     this.selectMode = this.selectMode === 'range' ? 'single' : 'range';
     this.startDate = null;
     this.endDate = null;
-    //testin
 
-    this.selectModeChanged.emit(this.selectMode); //
+    this.selectModeChanged.emit(this.selectMode);
   }
 
   isSelected(date: Date) {
@@ -140,7 +151,7 @@ export class CalendarComponent implements OnInit{
   }
 
   openModal() {
-    this.dashMainComponent.openModal(); //Lo que podria hacer es tener 2 metodos en esta clase, algo asi como openDayModal y openRangeModal,
+    this.dashMainComponent.openModal();
   }
 
   closeModal() {
@@ -148,26 +159,56 @@ export class CalendarComponent implements OnInit{
   }
 
   selectModalRangeType(selectedModal: 'single' | 'range') {
-    //PROBANDO ESTO AHORA
     this.selectMode = selectedModal;
   }
-
-  ////////////////////////////////////////  TEST DE MODALES
 
   openModalWithSingleDay() {}
 
   openModalWithRange() {}
 
-  ////////////////////////////////////////
   confirmSelection() {
-    this.openModal(); //Abro el modal -- Este modal tiene que tener o el componente de rango, o el de día, segun este el boton puesto
-    if (this.selectMode === 'single') {
-      console.log('Día seleccionado (modo single):', this.startDate);
-    } else if (this.selectMode === 'range') {
-      console.log('Fechas seleccionadas (modo rango):', {
-        start: this.startDate,
-        end: this.endDate,
-      });
-    }
+  this.openModal();
+ 
+  if (this.selectMode === 'single' && this.startDate) {
+    console.log('Fecha original seleccionada:', this.startDate);
+    const formattedDate = this.dateService.formatDBWithTimezone(this.startDate);
+    console.log('Fecha formateada con ajuste:', formattedDate);
+   
+    this.dailyMetricService.getHotelInfoByDate(this.selectedHotelId, formattedDate).subscribe({
+      next: (data) => {
+        console.log('Datos del día:', data);
+        
+        // Actualizar el servicio con los datos obtenidos
+        this.calendarDataService.updateSelection({
+          mode: 'single',
+          startDate: this.startDate!,
+          hotelId: this.selectedHotelId,
+          data: data
+        });
+      },
+      error: (err) => console.error('Error al obtener datos del día:', err)
+    });
+  } else if (this.selectMode === 'range' && this.startDate && this.endDate) {
+    console.log('Fechas originales seleccionadas:', { start: this.startDate, end: this.endDate });
+    const formattedStartDate = this.dateService.formatDBWithTimezone(this.startDate);
+    const formattedEndDate = this.dateService.formatDBWithTimezone(this.endDate);
+    console.log('Fechas formateadas con ajuste:', { start: formattedStartDate, end: formattedEndDate });
+   
+    this.dailyMetricService.getHotelInfoByRange(this.selectedHotelId, formattedStartDate, formattedEndDate).subscribe({
+      next: (data) => {
+        console.log('Datos del rango completo:', data);
+        
+        // Actualizar el servicio con los datos obtenidos
+        this.calendarDataService.updateSelection({
+          mode: 'range',
+          startDate: this.startDate!,
+          endDate: this.endDate!,
+          hotelId: this.selectedHotelId,
+          data: data
+        });
+      },
+      error: (err) => console.error('Error al obtener datos del rango:', err)
+    });
   }
+}
 }

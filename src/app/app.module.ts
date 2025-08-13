@@ -45,9 +45,11 @@ import { DailyDropdownComponent } from './components/metrics/daily-container/dai
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
+    
     
    
   ],

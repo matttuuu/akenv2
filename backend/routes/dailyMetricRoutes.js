@@ -8,7 +8,7 @@ router.get("/getDailyMetrics",dailyMetricController.getDailyMetrics);
 
 router.post("/addDailyMetric",dailyMetricController.addDailyMetric)
 
-router.get("/getDailyMetricsByRange", dailyMetricController.getDailyMetricsByRange);
+router.get("/getDailyMetricsByRange", dailyMetricController.getDailyMetricsByRange); //Check 's' en 'metrics'
 
 router.get("/getDailyMetricByDate", dailyMetricController.getDailyMetricByDate)
 

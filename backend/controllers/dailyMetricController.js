@@ -49,10 +49,16 @@ const addDailyMetric = async (req, res) => {
 
 const getDailyMetricsByRange = async (req, res) => {
   try {
-    const { startDate, endDate } = req.body;
+    const { startDate, endDate, hotelId } = req.query; //QUERY
+    if (!startDate || !endDate || !hotelId) {
+      return res
+        .status(400)
+        .json({ error: "Se requiere fecha de inicio, final e ID del hotel a consultar" });
+    }
     const data = await dailyMetricModel.getDailyMetricsByDateRange(
       startDate,
-      endDate
+      endDate,
+      hotelId
     );
     res.json(data);
   } catch (error) {

@@ -1,53 +1,42 @@
 <div class="layout-main">
   <div class="comparison-data-container">
-    <p>texto dentro de comparison-data-container</p>
-    <div class="card-title"><h3>Rango de fechas</h3></div>
-    <div class="table-card">
-        <div class="table-title"><h3>Datos detallados por dia</h3></div>
+    <div class="card-title">
+      <h3>Rango de fechas: {{ startDate }} - {{ endDate }}</h3>
+    </div>
+    
+    <div class="table-card" *ngIf="variables.length > 0; else noData">
+      <div class="table-title">
+        <h3>Datos detallados por día</h3>
+      </div>
+      
       <table class="table-comparison">
         <thead>
-            <tr>
-          <th>DATE</th>
-          <th>HOTEL ID</th>
-          <th>CHECK INS</th>
-          <th>CHECK OUTS</th>
-          <th>CONFIRMED RESERVATIONS</th>
-          <th>CANCELED RESERVATIONS</th>
-          <th>ADR</th>
-        </tr>
+          <tr>
+            <th>FECHA</th>
+            <th>HOTEL ID</th>
+            <th>CHECK INS</th>
+            <th>CHECK OUTS</th>
+            <th>RESERVAS CONFIRMADAS</th>
+            <th>RESERVAS CANCELADAS</th>
+            <th>ADR</th>
+          </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let variable of variables">
-                <td>{{variable.date}}</td>
-                <td>{{variable.hotelId}}</td>
-                <td>{{variable.checkIns}}</td>
-                <td>{{variable.checkOuts}}</td>
-                <td>{{variable.confirmed}}</td>
-                <td>{{variable.canceled}}</td>
-                <td>{{variable.adr}}</td>
-            </tr>
+          <tr *ngFor="let variable of variables">
+            <td>{{ variable.date }}</td>
+            <td>{{ variable.hotelId }}</td>
+            <td>{{ variable.checkIns }}</td>
+            <td>{{ variable.checkOuts }}</td>
+            <td>{{ variable.confirmed }}</td>
+            <td>{{ variable.canceled }}</td>
+            <td>{{ variable.adr | currency:'USD':'symbol':'1.2-2' }}</td>
+          </tr>
         </tbody>
-        <tr>
-          <td>7/8/25</td> <!---->
-          <td>info</td>
-          <td>info</td>
-          <td>info</td>
-          <td>info</td>
-          <td>n°</td>
-          <td>info</td>
-        </tr>
-        <tr>
-          <td>8/8/25</td><!--Ambas de estas secciones se tienen que generar dinamicamente (la misma cantidad de filas y datos, con la consulta que se le hace a la db)-->
-          <td>number</td>
-          <td>data</td>
-          <td>info </td>
-          <td>n°</td>
-          <td>info</td>
-          <td>data</td> 
-        </tr>
       </table>
     </div>
-    <!--La tabla que compara la info que encuentra de cada hotel, en db-->
-    <br />
+    
+    <ng-template #noData>
+      <p>No hay datos disponibles para el rango seleccionado</p>
+    </ng-template>
   </div>
 </div>

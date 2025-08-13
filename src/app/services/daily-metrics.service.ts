@@ -59,10 +59,17 @@ export class DailyMetricsService {
     });
   }
 
-  getHotelInfoByDate(hotelId: string, date: string) {
+  getHotelInfoByDate(hotelId: string, date: string) { //Me devuelve la informacion de un dia especifico
     return this.http.get<any>(
       `${this.apiURL}/getDailyMetricByDate?hotelId=${hotelId}&date=${date}`
     );
+  }
+
+  getHotelInfoByRange(hotelId: string, startDate: string, endDate: string) { //Me devuelve la informacion de un rango de fechas
+    return this.http.get<any>(
+      `${this.apiURL}/getDailyMetricsByRange?hotelId=${hotelId}&startDate=${startDate}&endDate=${endDate}`
+    );
+
   }
 
   

@@ -1,7 +1,45 @@
 <div class="layout-main">
-    <div class="day-data-container">
-        <p>texto dentro de day-data-container</p>
-        <p>Esta ventana aparece en este modal, si se selecciona un unico dia del calendario</p>
+  <div class="day-data-container">
+    <div class="card-title">
+      <h3>Datos del día: {{ formattedDate }}</h3>
     </div>
     
+    <div *ngIf="selection && dayData; else noData" class="single-day-details">
+      <div class="metrics-grid">
+        <div class="metric-item">
+          <label>Hotel ID:</label>
+          <span>{{ dayData.hotel_id }}</span>
+        </div>
+        
+        <div class="metric-item">
+          <label>Check Ins:</label>
+          <span>{{ dayData.checkins }}</span>
+        </div>
+        
+        <div class="metric-item">
+          <label>Check Outs:</label>
+          <span>{{ dayData.checkouts }}</span>
+        </div>
+        
+        <div class="metric-item">
+          <label>Reservas Confirmadas:</label>
+          <span>{{ dayData.confirmedreserves }}</span>
+        </div>
+        
+        <div class="metric-item">
+          <label>Reservas Canceladas:</label>
+          <span>{{ dayData.cancelledreserves }}</span>
+        </div>
+        
+        <div class="metric-item">
+          <label>ADR:</label>
+          <span>{{ dayData.adr | currency:'USD':'symbol':'1.2-2' }}</span>
+        </div>
+      </div>
+    </div>
+    
+    <ng-template #noData>
+      <p>No hay datos disponibles para mostrar</p>
+    </ng-template>
+  </div>
 </div>

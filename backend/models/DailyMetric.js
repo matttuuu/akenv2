@@ -6,7 +6,8 @@ const getAllDailyMetrics = async () => {
   return result.rows;
 };
 
-const getDailyMetricByDateAndHotel = async (metricDate, hotelId) => { //NUEVA, probando
+const getDailyMetricByDateAndHotel = async (metricDate, hotelId) => {
+  //NUEVA, probando
   try {
     const query = `
       SELECT * FROM daily_metrics
@@ -39,17 +40,19 @@ const getDailyMetricBySingleDate = async (metricDate) => {
   }
 };
 
-const getDailyMetricsByDateRange = async (startDate, endDate) => {
+const getDailyMetricsByDateRange = async (startDate, endDate, hotelId) => {
   //Posiblemente tenga que modificar esta para saber el id
   try {
     // Asegúrate de que las fechas estén en el formato correcto -----ERA ACA, EN EL MODELO, EN DONDE ESTABA EL ERRROR
     const query = `
             SELECT * FROM daily_metrics 
-            WHERE createdat BETWEEN $1 AND $2 
+            WHERE DATE(createdat) >= DATE($1) 
+            AND DATE(createdat) <= DATE($2)
+            AND hotel_id = $3 
             ORDER BY createdat ASC
         `;
 
-    const result = await pool.query(query, [startDate, endDate]);
+    const result = await pool.query(query, [startDate, endDate, hotelId]);
     return result.rows; // Devuelve las filas directamente
   } catch (error) {
     console.error("Error en getDailyMetricsByDateRange:", error);
