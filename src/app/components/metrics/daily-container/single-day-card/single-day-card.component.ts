@@ -21,7 +21,7 @@ export class SingleDayCardComponent implements OnInit, OnDestroy {
     this.subscription = this.calendarDataService.selection$.subscribe(selection => {
       if (selection && selection.mode === 'single') {
         this.selection = selection;
-        console.log('Single day data received:', selection);
+        
       }
     });
   }

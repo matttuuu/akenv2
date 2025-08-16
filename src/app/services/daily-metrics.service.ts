@@ -21,11 +21,11 @@ export class DailyMetricsService {
   ) {}
 
   setYesterdayData(data: any) {
-    // Método para actualizar los datos del día anterior
     this.yesterdayDataSubject.next(data);
   }
 
-  insertDailyMetricsToDB(clientToken: string, accessToken: string): void {
+  insertDailyMetricsToDB(clientToken: string, accessToken: string): void { 
+    //Metodo de prueba para insercion automatica: toma los datos actuales de live-metrics y los envia a la db
     forkJoin({
       checkIns: this.liveMetrics.getTotalCheckIns(),
       checkOuts: this.liveMetrics.getTotalCheckOuts(),
@@ -59,18 +59,17 @@ export class DailyMetricsService {
     });
   }
 
-  getHotelInfoByDate(hotelId: string, date: string) { //Me devuelve la informacion de un dia especifico
+  getHotelInfoByDate(hotelId: string, date: string) {
+    //Me devuelve la informacion de un dia especifico
     return this.http.get<any>(
       `${this.apiURL}/getDailyMetricByDate?hotelId=${hotelId}&date=${date}`
     );
   }
 
-  getHotelInfoByRange(hotelId: string, startDate: string, endDate: string) { //Me devuelve la informacion de un rango de fechas
+  getHotelInfoByRange(hotelId: string, startDate: string, endDate: string) {
+    //Me devuelve la informacion de un rango de fechas
     return this.http.get<any>(
       `${this.apiURL}/getDailyMetricsByRange?hotelId=${hotelId}&startDate=${startDate}&endDate=${endDate}`
     );
-
   }
-
-  
 }

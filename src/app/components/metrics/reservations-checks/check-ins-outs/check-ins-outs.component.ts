@@ -3,7 +3,7 @@ import {
   ChartComponent,
   ApexNonAxisChartSeries,
   ApexChart,
-  ApexResponsive,
+  ApexResponsive
 } from 'ng-apexcharts';
 import { forkJoin, Subscription } from 'rxjs';
 import { LiveMetricsService } from '../../../../services/live-metrics.service';
@@ -56,7 +56,7 @@ export class CheckInsOutsComponent implements OnInit, OnDestroy {
       this.chartOptions = {
         series: [confirmedCheckIns, confirmedCheckOuts],
         chart: { height: 350, width: 500, type: 'donut' },
-        labels: ['Check Ins', 'Check Outs'],
+        labels: ['Check-Ins', 'Check-Outs'],
         responsive: [
           {
             breakpoint: 600,

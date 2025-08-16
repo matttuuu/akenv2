@@ -70,16 +70,7 @@ export class LiveMetricsService {
     };
   }
 
-  private getHotelTokens(hotelName: String) {
-    ///seguir
-    //Metodo que me permite obtener par de tokens
-    this.hotelConfig.getHotelsList().subscribe({
-      next: (response) => {},
-    });
-  }
-
   
-
   //Datos hotel mews
   //total available rooms?
 
@@ -345,7 +336,7 @@ export class LiveMetricsService {
       map(({ orderItems, occupiedRooms }) => {
         if (!orderItems || occupiedRooms === 0) return 0;
 
-        // Fecha actual en UTC (para asegurar consistencia)
+        // Fecha actual en UTC 
         const todayStart = new Date();
         todayStart.setHours(0, 0, 0);
         const todayEnd = new Date();
@@ -354,13 +345,7 @@ export class LiveMetricsService {
         // Filtramos los ítems de tipo SpaceOrder del día
         const validItems = orderItems.filter(
           (item) =>
-            // item.Type === 'SpaceOrder' &&
-            item.Amount.NetValue //&&
-          // item.ConsumedUtc &&
-          // // new Date(item.ConsumedUtc) >= todayStart &&
-          // // new Date(item.ConsumedUtc) <= todayEnd &&
-          // item.AccountingState !== 'Canceled' &&
-          // item.Options?.CanceledWithReservation === false
+            item.Amount.NetValue
         );
 
         // Sumamos los ingresos netos
@@ -375,9 +360,8 @@ export class LiveMetricsService {
     );
   }
 
-  //Info de ingresos en vivo (Sumado despues para ser guardado en las metricas daily) - ADR y Total (Daily) Revenue
 
   makeGetTokensSpeak() {
-    console.log(this.getTokensPayload()); //Tambien cambiado por getTokensPayload()
+    console.log(this.getTokensPayload()); //metodo de prueba para ver tokens en console log, cambiado getTestingTokensPayload()
   }
 }

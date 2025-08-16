@@ -51,9 +51,6 @@ import { DailyDropdownComponent } from '../../metrics/daily-container/daily-drop
 export class DashMainComponent implements OnInit {
   currentUser$: Observable<User | null>; //Por convencion, todo lo que lleva un  "$" es un observable (puede cambiar su valor con el tiempo)
 
-  // This gives you todays date.
-
-  // This also gives you todays date if you don't alter it on init.
   private dateToday: Date = new Date();
   private dateYesterday: Date = new Date();
   formattedDateYesterday!: string;
@@ -68,14 +65,11 @@ export class DashMainComponent implements OnInit {
   logoPath = 'assets/ameklogo-side.png';
 
   currentUser = ''; //Se usa?
-  activeTab: 'live' | 'daily' = 'live'; //Para saber que tab esta activo
+  activeTab: 'live' | 'daily' | 'compare' = 'live'; //Para saber que tab esta activo
   selectedRangeMode: 'range' | 'single' = 'range'; // Para saber que modo de rango esta activo
 
   ngOnInit() {
-    // this.hotelConfigService.onTokensChange().subscribe(() => {
-    //   // this.loadMetrics() // 'aca' se deberia ejecutar la funcionalidad que carga las metricas
-    // });
-    // this.getCurrentUserName()
+
     // Calcular ayer
     this.dateYesterday = new Date();
     this.dateYesterday.setDate(this.dateToday.getDate() - 1);
@@ -83,12 +77,8 @@ export class DashMainComponent implements OnInit {
     this.formattedDateYesterday =
       this.dateYesterday.toLocaleDateString('es-AR');
 
-    // Mostrar en consola
-    console.log(this.formattedDateYesterday); // Ejemplo: "8/8/2025"
-
-    
-    // // Si lo querés enviar al backend como YYYY-MM-DD
-    // const isoFormatted = this.dateYesterday.toISOString().split('T')[0]; 
+    // //si quisiera mandarlo al backend como: YYYY-MM-DD
+    // const isoFormatted = this.dateYesterday.toISOString().split('T')[0];
     // console.log(isoFormatted); // "2025-08-08"
   }
 
@@ -112,7 +102,7 @@ export class DashMainComponent implements OnInit {
     this.authService.logout();
   }
 
-  selectTab(tab: 'live' | 'daily') {
+  selectTab(tab: 'live' | 'daily' | 'compare') {
     this.activeTab = tab;
   }
 
@@ -121,7 +111,6 @@ export class DashMainComponent implements OnInit {
   }
 
   ////////////////TEST DE MODALES (funciones consumidas por calendar.component.ts)////////////////////
-  /////DEBERIAN TENER EL MISMO NOMBRE?
 
   openModalWithSingleDay() {
     // Lógica para abrir el modal de día
@@ -131,5 +120,9 @@ export class DashMainComponent implements OnInit {
   openModalWithRange() {
     // Lógica para abrir el modal de rango
     this.showCompareModal = true; // Aquí podrías abrir un modal específico para el rango
+  }
+
+  onModalRequested() {
+    this.openModal();
   }
 }

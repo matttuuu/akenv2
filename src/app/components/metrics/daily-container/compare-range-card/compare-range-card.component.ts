@@ -23,7 +23,7 @@ export class CompareRangeCardComponent implements OnInit, OnDestroy {
       if (selection && selection.mode === 'range') {
         this.selection = selection;
         this.processRangeData(selection.data);
-        console.log('Range data received:', selection);
+        
       }
     });
   }
@@ -33,26 +33,26 @@ export class CompareRangeCardComponent implements OnInit, OnDestroy {
   }
   
   // Procesar los datos del rango para la tabla
-  private processRangeData(data: any[]) {
-    if (data && data.length > 0) {
-      this.variables = data.map(item => ({
-        date: new Date(item.createdat).toLocaleDateString('es-AR'),
-        hotelId: item.hotel_id,
-        checkIns: item.checkins,
-        checkOuts: item.checkouts,
-        confirmed: item.confirmedreserves,
-        canceled: item.cancelledreserves,
-        adr: item.adr
-      }));
-    }
+ private processRangeData(data: any[]) {
+  if (data && data.length > 0) {
+    this.variables = data.map(item => ({
+      date: item.createdat.split('T')[0].split('-').reverse().join('/'), // <-- sin desfase
+      hotelId: item.hotel_id,
+      checkIns: item.checkins,
+      checkOuts: item.checkouts,
+      confirmed: item.confirmedreserves,
+      canceled: item.cancelledreserves,
+      adr: item.adr
+    }));
   }
+}
   
   // Métodos para obtener datos formateados
   get startDate() {
-    return this.selection?.startDate?.toLocaleDateString('es-AR') || '';
+    return this.selection?.startDate
   }
   
   get endDate() {
-    return this.selection?.endDate?.toLocaleDateString('es-AR') || '';
+    return this.selection?.endDate
   }
 }

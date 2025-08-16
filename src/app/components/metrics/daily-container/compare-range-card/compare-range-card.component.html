@@ -1,12 +1,12 @@
 <div class="layout-main">
   <div class="comparison-data-container">
     <div class="card-title">
-      <h3>Rango de fechas: {{ startDate }} - {{ endDate }}</h3>
+      <h3>Datepicker range: {{ startDate }} - {{ endDate }}</h3>
     </div>
     
     <div class="table-card" *ngIf="variables.length > 0; else noData">
       <div class="table-title">
-        <h3>Datos detallados por día</h3>
+        <h3>Detailed data for selected range:</h3>
       </div>
       
       <table class="table-comparison">

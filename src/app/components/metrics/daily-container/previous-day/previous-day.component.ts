@@ -33,25 +33,18 @@ export class PreviousDayComponent implements OnInit {
       this.dateService.getYesterday()
     );
 
-    console.log('Fecha de hoy:', today);
-    console.log('Fecha de ayer:', yesterday);
-    console.log('Fecha de hoy corta:', this.todayShort);
-    console.log('Fecha de ayer corta:', this.yesterdayShort);
-    console.log('Fecha de hoy para DB:', this.todayDB); //
-    console.log('Fecha de ayer para DB:', this.yesterdayDB); //
+    // console.log('Fecha de hoy:', today);
+    // console.log('Fecha de ayer:', yesterday);
+    // console.log('Fecha de hoy corta:', this.todayShort);
+    // console.log('Fecha de ayer corta:', this.yesterdayShort);
+    // console.log('Fecha de hoy para DB:', this.todayDB); //
+    // console.log('Fecha de ayer para DB:', this.yesterdayDB); //
     //Todo esto para probar, borrar luego
     this.dailyMetricsService.yesterdayData$.subscribe((data) => {
-      // Cambiar esto:
-      // this.hotelDataYesterday = data;
-
-      // Por esto:
+     
       this.hotelDataYesterday = data && data.length > 0 ? data[0] : null;
 
-      console.log('Datos recibidos en PreviousDayComponent:', data);
-      if (data && data.length > 0) {
-        console.log('Propiedades disponibles:', Object.keys(data[0]));
-        console.log('Primer elemento:', data[0]);
-      }
+      
     });
   }
 

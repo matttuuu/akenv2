@@ -1,20 +1,37 @@
-
 .content {
-    margin: 0;
-    padding: 10px;
-    outline: #2b2b2b solid 5px;
+  width: 700px;
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  border: solid 1px #e0e0e0;
+  border-radius: 3px;
+  justify-content: center; /* Cambiado de space-between a center */
+  align-items: center;
+  text-align: center;
+  padding: 10px; /* Agregado para dar espacio interno */
+  box-sizing: border-box; /* Para incluir padding en el tamaño total */
+  
 }
 
-.content .title-number{
-    text-align: Center;
-    
-    font-size: 80px ;
-    
 
+
+.content .title-number {
+  text-align: center;
+  font-size: 40px;
+  margin: 0; /* Elimina márgenes por defecto */
+  flex-grow: 1; /* Hace que ocupe el espacio disponible */
+  display: flex; /* Convierte en flex container */
+  align-items: center; /* Centra verticalmente el texto */
+  justify-content: center; /* Centra horizontalmente el texto */
 }
 
 .content .description {
-    text-align: Center;
-    background-color: antiquewhite;
-    font-size: 25px;
+  text-align: center;
+  /* background-color: rgb(144, 144, 144); */
+  color: rgb(0, 0, 0);
+  font-size: 25px;
+  margin: 0; /* Elimina márgenes por defecto */
+  padding: 8px 12px; /* Agrega padding interno */
+  width: 100%; /* Ocupa todo el ancho */
+  box-sizing: border-box;
 }

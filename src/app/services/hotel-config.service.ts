@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -18,22 +17,28 @@ export class HotelConfigService {
   private tokensChanged = new BehaviorSubject<boolean>(false);
 
   notifyTokensChange() {
-    //cambio de hotel para dropdowN
+    /**
+     * Notifica a todos los suscriptores que los tokens han cambiado.
+     * Se llama internamente cuando se actualizan clientToken y accessToken.
+     */
     this.tokensChanged.next(true);
   }
 
   onTokensChange(): Observable<boolean> {
-    //cambio de hotel para dropdown
+    //Devuelve un observable al que se puede suscribir un componente para enterarse cuando cambia un token
+    //se usa para que al cambiar de hotel, los componente actualizen datos
+
     return this.tokensChanged.asObservable();
   }
 
-  setTokens(clientToken: string, accessToken: string) { //Funcion que hace que se seteen los tokens de cliente y acceso de cada hotel  
+  setTokens(clientToken: string, accessToken: string) {
+    //Asigna valores a client y accesstoken, y notifica este cambio
     this.clientToken = clientToken;
     this.accessToken = accessToken;
     this.notifyTokensChange();
   }
 
-  getClientToken(): string {
+  getClientToken(): string {  
     return this.clientToken;
   }
 
@@ -56,10 +61,9 @@ export class HotelConfigService {
     return 'C66EF7B239D24632943D115EDE9CB810-EA00F8FD8294692C940F6B5A8F9453D';
   }
 
-  getHotelTokensByName(hotelName: string) {
+  getHotelTokensByName(hotelName: string) { //Consulta al backend para obtener los tokens de un hotel en la db, buscando por nombre
     return this.http.get(this.hotelsUrl + '/getHotelTokensByName', {
       params: { name: hotelName },
     });
   }
-  
 }

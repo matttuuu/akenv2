@@ -65,7 +65,7 @@ export class ReservationsInfoComponent implements OnInit, OnDestroy {
       this.chartOptions = {
         series: [confirmedReservations, canceledReservations],
         chart: { height: 350, width: 500, type: 'donut' },
-        labels: ['Confirmed', 'Canceled'],
+        labels: ['Confirmed reservations', 'Canceled reservations'],
         responsive: [
           {
             breakpoint: 600,
@@ -73,9 +73,7 @@ export class ReservationsInfoComponent implements OnInit, OnDestroy {
               chart: { width: 300 },
               legend: { position: 'bottom' },
               title: { text: 'Check Ins / Check Outs' },
-              labels: {
-                show: true
-              }
+             align: 'center'
             },
           },
         ],

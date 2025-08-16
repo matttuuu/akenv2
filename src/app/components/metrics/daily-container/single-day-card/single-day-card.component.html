@@ -1,7 +1,7 @@
 <div class="layout-main">
   <div class="day-data-container">
     <div class="card-title">
-      <h3>Datos del día: {{ formattedDate }}</h3>
+      <h3>Metrics information of day: {{ formattedDate }}</h3>
     </div>
     
     <div *ngIf="selection && dayData; else noData" class="single-day-details">
@@ -22,24 +22,24 @@
         </div>
         
         <div class="metric-item">
-          <label>Reservas Confirmadas:</label>
+          <label>Total confirmed reservations:</label>
           <span>{{ dayData.confirmedreserves }}</span>
         </div>
         
         <div class="metric-item">
-          <label>Reservas Canceladas:</label>
+          <label>Total canceled reservations:</label>
           <span>{{ dayData.cancelledreserves }}</span>
         </div>
         
         <div class="metric-item">
-          <label>ADR:</label>
+          <label>Final ADR of day:</label>
           <span>{{ dayData.adr | currency:'USD':'symbol':'1.2-2' }}</span>
         </div>
       </div>
     </div>
     
     <ng-template #noData>
-      <p>No hay datos disponibles para mostrar</p>
+      <p>No available data to show</p>
     </ng-template>
   </div>
 </div>

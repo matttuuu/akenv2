@@ -43,7 +43,7 @@ const getDailyMetricBySingleDate = async (metricDate) => {
 const getDailyMetricsByDateRange = async (startDate, endDate, hotelId) => {
   //Posiblemente tenga que modificar esta para saber el id
   try {
-    // Asegúrate de que las fechas estén en el formato correcto -----ERA ACA, EN EL MODELO, EN DONDE ESTABA EL ERRROR
+    //Verificar fechas con formato correcto! ---
     const query = `
             SELECT * FROM daily_metrics 
             WHERE DATE(createdat) >= DATE($1) 

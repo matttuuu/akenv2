@@ -21,10 +21,10 @@ export class AuthService {
     onAuthStateChanged(this.auth, (user) => {
       this.currentUserSubject.next(user);
       if (user) {
-        //Usuario logeado... /////QUITAR ESTOS CONSOLE LOGS EN PRODUCCION
-        console.log(user.uid);
-        console.log(user.email);
-        console.log(user.displayName);
+        // // //Usuario logeado... /////QUITAR ESTOS CONSOLE LOGS EN PRODUCCION
+        // console.log(user.uid);
+        // console.log(user.email);
+        // console.log(user.displayName);
       }
     });
   }

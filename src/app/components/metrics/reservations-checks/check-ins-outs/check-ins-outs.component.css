@@ -1,3 +1,22 @@
-*{
-    outline: #555555 solid 3px;
+/* A algo más específico como: */
+.chart-container {
+    border: solid 1px #e0e0e0;
+    border-radius: 5px;
+    padding: 15px;
+    background-color: white;
+}
+
+/* O si quieres aplicarlo solo al componente del chart: */
+:host {
+    display: block;
+    border: solid 1px #e0e0e0;
+    border-radius: 5px;
+    padding: 15px;
+    background-color: white;
+}
+
+/* Para asegurar que el chart se vea bien: */
+apx-chart {
+    display: block;
+    width: 100%;
 }

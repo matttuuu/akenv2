@@ -7,11 +7,10 @@ import {
   signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DashMainComponent } from '../dash-main/dash-main.component';
+// import { DashMainComponent } from '../dash-main/dash-main.component';
 import { DateService } from '../../../services/date.service';
 import { DailyMetricsService } from '../../../services/daily-metrics.service';
 import { CalendarDataService } from '../../../services/calendar-data.service';
-
 
 @Component({
   selector: 'app-calendar',
@@ -24,6 +23,7 @@ export class CalendarComponent implements OnInit {
   selectMode: 'single' | 'range' = 'range';
 
   @Output() selectModeChanged = new EventEmitter<'range' | 'single'>();
+  @Output() modalRequested = new EventEmitter<void>();
 
   today = new Date();
   viewDate = signal(new Date(this.today));
@@ -35,7 +35,6 @@ export class CalendarComponent implements OnInit {
   weekDays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
   constructor(
-    private dashMainComponent: DashMainComponent,
     private dateService: DateService,
     private dailyMetricService: DailyMetricsService,
     private calendarDataService: CalendarDataService
@@ -56,31 +55,31 @@ export class CalendarComponent implements OnInit {
     });
   }
 
-  currentYear() {
+  currentYear() { //Devuelve el año actual
     return this.viewDate().getFullYear();
   }
 
-  currentMonth() {
+  currentMonth() { //Devuelve el mes actual
     return this.viewDate().getMonth();
   }
 
-  get currentMonthName() {
+  get currentMonthName() { //Devuelve el nombre del mes actual
     return this.viewDate().toLocaleString('en-US', { month: 'long' });
   }
 
-  prevMonth() {
+  prevMonth() { //Setea al mes anterior (boton)
     const date = new Date(this.viewDate());
     date.setMonth(date.getMonth() - 1);
     this.viewDate.set(date);
   }
 
-  nextMonth() {
+  nextMonth() { //Setea al mes siguiente (boton)
     const date = new Date(this.viewDate());
     date.setMonth(date.getMonth() + 1);
     this.viewDate.set(date);
   }
 
-  calendarDays() {
+  calendarDays() { //Nos da el grid con los dias
     const year = this.currentYear();
     const month = this.currentMonth();
 
@@ -111,7 +110,7 @@ export class CalendarComponent implements OnInit {
     return days;
   }
 
-  selectDate(date: Date) {
+  selectDate(date: Date) { 
     if (this.selectMode === 'single') {
       this.startDate = date;
       this.endDate = null;
@@ -150,65 +149,83 @@ export class CalendarComponent implements OnInit {
     return false;
   }
 
-  openModal() {
-    this.dashMainComponent.openModal();
+  openModal() { //Emite una señal para que se abra el modal en dash-main-component html
+    this.modalRequested.emit();
   }
 
-  closeModal() {
-    this.dashMainComponent.closeModal();
-  }
+
 
   selectModalRangeType(selectedModal: 'single' | 'range') {
     this.selectMode = selectedModal;
   }
 
-  openModalWithSingleDay() {}
-
-  openModalWithRange() {}
-
   confirmSelection() {
-  this.openModal();
- 
-  if (this.selectMode === 'single' && this.startDate) {
-    console.log('Fecha original seleccionada:', this.startDate);
-    const formattedDate = this.dateService.formatDBWithTimezone(this.startDate);
-    console.log('Fecha formateada con ajuste:', formattedDate);
-   
-    this.dailyMetricService.getHotelInfoByDate(this.selectedHotelId, formattedDate).subscribe({
-      next: (data) => {
-        console.log('Datos del día:', data);
-        
-        // Actualizar el servicio con los datos obtenidos
-        this.calendarDataService.updateSelection({
-          mode: 'single',
-          startDate: this.startDate!,
-          hotelId: this.selectedHotelId,
-          data: data
+    this.openModal();
+
+    //Emitimos el modo antes de abrir el modal
+    this.selectModeChanged.emit(this.selectMode);
+
+    if (this.selectMode === 'single' && this.startDate) {
+      // console.log('Fecha original seleccionada:', this.startDate);
+      const formattedDate = this.dateService.formatDBWithTimezone(
+        this.startDate
+      );
+      
+
+      this.dailyMetricService
+        .getHotelInfoByDate(this.selectedHotelId, formattedDate)
+        .subscribe({
+          next: (data) => {
+            console.log('Datos del día:', data);
+
+            //Actualizamos la informacion de modal de dia unico
+            this.calendarDataService.updateSelection({
+              mode: 'single',
+              startDate: this.startDate!,
+              hotelId: this.selectedHotelId,
+              data: data,
+            });
+          },
+          error: (err) => console.error('Error al obtener datos del día:', err),
         });
-      },
-      error: (err) => console.error('Error al obtener datos del día:', err)
-    });
-  } else if (this.selectMode === 'range' && this.startDate && this.endDate) {
-    console.log('Fechas originales seleccionadas:', { start: this.startDate, end: this.endDate });
-    const formattedStartDate = this.dateService.formatDBWithTimezone(this.startDate);
-    const formattedEndDate = this.dateService.formatDBWithTimezone(this.endDate);
-    console.log('Fechas formateadas con ajuste:', { start: formattedStartDate, end: formattedEndDate });
-   
-    this.dailyMetricService.getHotelInfoByRange(this.selectedHotelId, formattedStartDate, formattedEndDate).subscribe({
-      next: (data) => {
-        console.log('Datos del rango completo:', data);
-        
-        // Actualizar el servicio con los datos obtenidos
-        this.calendarDataService.updateSelection({
-          mode: 'range',
-          startDate: this.startDate!,
-          endDate: this.endDate!,
-          hotelId: this.selectedHotelId,
-          data: data
+    } else if (this.selectMode === 'range' && this.startDate && this.endDate) {
+      console.log('Fechas originales seleccionadas:', {
+        start: this.startDate,
+        end: this.endDate,
+      });
+      const formattedStartDate = this.dateService.formatDBWithTimezone(
+        this.startDate
+      );
+      const formattedEndDate = this.dateService.formatDBWithTimezone(
+        this.endDate
+      );
+      // console.log('Fechas formateadas con ajuste:', {
+      //   start: formattedStartDate,
+      //   end: formattedEndDate,
+      // });
+
+      this.dailyMetricService
+        .getHotelInfoByRange(
+          this.selectedHotelId,
+          formattedStartDate,
+          formattedEndDate
+        )
+        .subscribe({
+          next: (data) => {
+            // console.log('Datos del rango completo:', data);
+
+            //Actualizamos la informacion de modal de rango
+            this.calendarDataService.updateSelection({
+              mode: 'range',
+              startDate: this.startDate!,
+              endDate: this.endDate!,
+              hotelId: this.selectedHotelId,
+              data: data,
+            });
+          },
+          error: (err) =>
+            console.error('Error al obtener datos del rango:', err),
         });
-      },
-      error: (err) => console.error('Error al obtener datos del rango:', err)
-    });
+    }
   }
-}
 }

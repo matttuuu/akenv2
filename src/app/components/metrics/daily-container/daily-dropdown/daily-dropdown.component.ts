@@ -30,7 +30,7 @@ export class DailyDropdownComponent {
   previousDayHotelInfo: any;
   yesterdayDB!: string;
 
-  hotelDataYesterday: any = null; // Agrega esta propiedad
+  hotelDataYesterday: any = null; 
 
   constructor(
     private dailyMetricService: DailyMetricsService,
@@ -50,7 +50,7 @@ export class DailyDropdownComponent {
     this.dailyMetricService.yesterdayData$.subscribe({
       next: (data) => {
         this.hotelDataYesterday = data;
-        console.log('Datos actualizados en el componente:', data);
+        
       },
       error: (err) => {
         console.error('Error en la suscripción:', err);
@@ -69,26 +69,6 @@ export class DailyDropdownComponent {
     });
   }
 
-  // onHotelChange(hotel: any) { //Esta funcion se ejecuta cuando se selecciona un hotel del dropdown: lo que hace es obtener los tokens de ese hotel
-  //   if (hotel && hotel.name) {
-  //     this.hotelConfigService
-  //       .getHotelTokensByName(hotel.name) // Nos devuelve el par de tokens: clientToken y accessToken
-  //       .subscribe((tokens: any) => { //Nos suscribimos al observable para obtener los tokens
-  //         if (!tokens || !tokens.clienttoken || !tokens.accesstoken) {
-  //           console.error(
-  //             'No se recibieron tokens válidos del backend:',
-  //             tokens
-  //           );
-  //           return;
-  //         }
-  //         this.tokens = tokens;
-  //         this.hotelConfigService.setTokens(
-  //           tokens.clienttoken,
-  //           tokens.accesstoken
-  //         );
-  //       });
-  //   }
-  // }
 
   //Para ver si vamos en el camino correcto, vamos a crear un metodo que nos traiga la info del hotel de ayer, similar al de arriba, pero usando el servicio dailyMetricsService
   //Este metodo funciona similar al de arriba, pero usando la db, y que me devuelve la info del hotel de ayer que yo seleccione en el dropdown
@@ -100,7 +80,7 @@ export class DailyDropdownComponent {
         .getHotelInfoByDate(hotel.id, this.yesterdayDB)
         .subscribe({
           next: (hotelInfo) => {
-            console.log('Datos de ayer para hotel seleccionado:', hotelInfo);
+            
             this.dailyMetricService.setYesterdayData(hotelInfo);
           },
           error: (err) => {
